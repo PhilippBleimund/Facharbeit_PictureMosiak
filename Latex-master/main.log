@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 21.12.10) (preloaded format=pdflatex 2021.12.27)  2 JAN 2022 22:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 21.12.10) (preloaded format=pdflatex 2021.12.27)  2 JAN 2022 22:45
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -215,7 +215,7 @@ File: images/Render_100x100.png Graphic file (type png)
 <use images/Render_100x100.png>
 Package pdftex.def Info: images/Render_100x100.png  used on input line 14.
 (pdftex.def)             Requested size: 146.36212pt x 142.26378pt.
- [2 <./images/Source_100x100.png (PNG copy)> <./images/Render_100x100.png (PNG copy)>]) [3] [4] (main.aux) ) 
+ [2 <./images/Source_100x100.png (PNG copy)> <./images/Render_100x100.png (PNG copy)>] [3]) [4] (main.aux) ) 
 Here is how much of TeX's memory you used:
  3774 strings out of 478659
  68191 string characters out of 2840669
@@ -225,7 +225,7 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  74i,10n,82p,1417b,379s stack positions out of 5000i,500n,10000p,200000b,80000s
 <C:/Users/Philipp Bleimund/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/Philipp Bleimund/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/Philipp Bleimund/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb>
-Output written on main.pdf (4 pages, 2042859 bytes).
+Output written on main.pdf (4 pages, 2044467 bytes).
 PDF statistics:
  32 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
