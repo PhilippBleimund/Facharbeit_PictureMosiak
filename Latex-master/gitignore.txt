@@ -1,0 +1,7 @@
+/.vscode/
+/main.aux
+/main.fdb_latexmk
+/main.fls
+/main.log
+/main.synctx.gz
+/main.toc
