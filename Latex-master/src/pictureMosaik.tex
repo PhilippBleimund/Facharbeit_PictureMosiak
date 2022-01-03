@@ -31,8 +31,9 @@ Diese Koordinaten werden im nächsten Schritt benutzt, um ein zweidimensionales 
 Das berechnen der durchschnittlichen Farbe von Segmenten und Bildern ist die erste Funktion, welche Threads nutzt. Implementationen von mir, welche Threads benutzen, bestehen meistens aus zwei Klassen. Eine Klasse, welche die Threads erstellt und verwaltet und eine weitere, welche den Code zum berechnen der jeweiligen Anforderung hat. In diesem Falle das Berechnen der durchschnittlichen Farbe. Die Klasse ``computeAverageColor'' besteht aus zwei Methoden. Eine zum Berechnen der Segmente und eine weitere für die gewählten Bilder. Der einzige Unterschied der beiden Methoden ist eine Sicherheitsfunktion in der Methode der Bilder welche wartet, bis genügend RAM verfügbar ist, bevor es das Bild in den RAM läd. Dies ist wichtig, da mehrere Threads gleichzeitig die Bilder im RAM zum Berechnen halten müssen. Je nach RAM Configuration und Bildergröße kann dies zu Komplikationen führen. Jeder der Threads ruft die Methode ``getAverage()'' der Klasse ``calculateAverage'' auf. Die Methode verlangt ein ``BufferedImage'' und ein enum ``calculateAverage.Method'', welches unterschiedliche Genauigkeitsstufen zum berechnen beinhaltet. Innerhalb der Methode ``getAverage()'' wird erst mit Hilfe des enums ein int definiert, welches beschreibt wie die nachfolgenden for-Schleifen erhöht werden. Weiterhin gibt es dre ``long''. Diese speichern den gesamten rot, blau und grün wert. Anschließend wird das Bild in der vorherigen definierten Schrittgröße durchgegangen und die rot, grün und blau werte des Pixels gespeichert. Zum Schluss wird ein neues ``Color'' Object mit den gesammelten werden geteilt durch die Anzahl der Pixel.
 
 \subsubsection{Erstellen einer Datenbank}
-Dieser Schritt wird immer dann durchgeführt, wenn im Programm Bilder ausgewählt wurden, oder eine speicherbare Datenbank erstellt wird. Wenn Datenbanken ausgewählt wurden, wird die eventuell erstellte Datenbank diesen hinzugefügt. Die Klasse ``DatabaseObj'' benötigt zwei Argumente. Eine Liste an Speicherorten der jeweiligen Bilder und ein Array an berechneten durchschnittlichen Farben. Innerhalb des ``DatabaseObj'' werden die beiden Werte der Listen in ``fileAndColor'' Objekten gespeichert. Wie der Name impliziert beinhalten die Objekte den Pfad des Bildes und den dazugehörigen Farbwert. Durch dieses Vorgehen kann ein BinarySort Algorithmus aus das neue Array angewendet werden. dazu hat die ``fileAndColor'' Klasse das ``Comparable'' interface implementiert. Für spätere Verwendung gibt es in den Objekten auch noch einen Zähler, welcher speichert, wie häufig das Bild in der Berechnung verwendet wurde. Alle Variablen der Klasse ``fileAndColor'' sind durch getter- setter-Methoden aufzurufen. Diese habe jedoch die Besonderheit, dass sie das ``synchronized'' Schlüsselwort besitzen (Hyperlink zu Kapitel Threads).\\
-\\
+Dieser Schritt wird immer dann durchgeführt, wenn im Programm Bilder ausgewählt wurden, oder eine speicherbare Datenbank erstellt wird. Wenn Datenbanken ausgewählt wurden, wird die eventuell erstellte Datenbank diesen hinzugefügt. Die Klasse ``DatabaseObj'' benötigt zwei Argumente. Eine Liste an Speicherorten der jeweiligen Bilder und ein Array an berechneten durchschnittlichen Farben. Innerhalb des ``DatabaseObj'' werden die beiden Werte der Listen in ``fileAndColor'' Objekten gespeichert. Wie der Name impliziert beinhalten die Objekte den Pfad des Bildes und den dazugehörigen Farbwert. Durch dieses Vorgehen kann ein BinarySort Algorithmus aus das neue Array angewendet werden. dazu hat die ``fileAndColor'' Klasse das ``Comparable'' interface implementiert. Für spätere Verwendung gibt es in den Objekten auch noch einen Zähler, welcher speichert, wie häufig das Bild in der Berechnung verwendet wurde. Alle Variablen der Klasse ``fileAndColor'' sind durch getter- setter-Methoden aufzurufen. Diese habe jedoch die Besonderheit, dass sie das ``synchronized'' Schlüsselwort besitzen (Hyperlink zu Kapitel Threads).
+\bigskip
+\newline
 Besonders werde ich auf die Methode ``compareTo()'', des Interfaces Comparable eingehen. In der Methode werden zwei Farben verglichen. Welche größer und kleiner ist. Die Schwierigkeit liegt darin ein Ergebnis zu bestimmen, wenn vier Werte verglichen werden müssen. Der alpha-Wert, rot-Wert, grün-Wert und blau-Wert. Um ein einfachen und zuverlässigen Vergleich zu machen, nutze ich die Methode ``getRGB()'' der ``Color'' Klasse. Interessant ist jedoch, was diese Methode macht. In der Klasse ``Color'' werden alle vier Werte in einem einzigen Integer gespeichert. Das liegt an der Genauigkeit, womit Farben gemischt werden. Jeder Wert befindet sich in einem Bereich von 0 bis 255. Dies entspricht genau einem Byte. Ein Integer wiederum besteht aus vier Bytes. Die vie Farbwerte werden sozusagen in die vier Bytes des Integers eingesetzt. In der Reihenfolge ``ARGB''.\\
 \begin{figure}[h]
     \centering
@@ -43,3 +44,47 @@ Besonders werde ich auf die Methode ``compareTo()'', des Interfaces Comparable e
     \end{tabular}
 \end{figure}
 \\Durch dieses Vorgehen wird aus vier Werten ein zuverlässiger Wert erstellt, welcher zum sortieren geeignet ist.
+
+\newpage
+
+\subsubsection{Berechnen der besten Bilder}
+Das Berechnen der besten Bilder für die jeweiligen Sektoren wird in der Klasse ``compareColor'' mit der Methode ``compare()'' ausgeführt. Die Methode gibt ein zweidimensionales ``File''-Array zurück. Dies steht dabei für die einzelnen Sektoren. Innerhalb der Methode wird für jeden Sektor ein ``Runnable'' erstellt. (siehe Kapitel Threads). Da es ein Limit für die Verwendung der Bilder gibt, sollen diese gleichmäßig verteilt werden. Um einen solchen Effekt zu erhalten wird eine Liste an ``Runnables'' erstellt und gemischt.
+
+\begin{figure}[h]
+    \centering
+    \subfloat[\centering ohne mischung]{
+        \includegraphics[height=5cm]{images/BadExample_Lines.png}
+    }
+    \subfloat[\centering mit mischung]{
+        \includegraphics[height=5cm]{images/GodExample_NoLines.png}
+    }
+    \caption[Beste Bilder]{Unterschied zwischen mischen und nicht mischen}
+\end{figure}
+
+\begin{sloppypar}
+Jeder ``Runnable'' sucht demnach nach dem besten Bild, welches noch verfügbar ist. Es werden dazu alle vorhandenen Datenbanken durchgegangen und für jede einzelne das beste Bild gesucht. Die besten aus alles Datenbanken werden dann verglichen und der beste wird gewählt. Um die beste Farbe einer Datenbank zu berechnen kann die java Methode ``Arrays.binarySearch'' verwendet werden. Diese Methode findet nicht nur den gleichen Wert, sondern auch einen index, an dem es den gesuchten Wert einsetzen würde. Anhand von dem Index wird dann im Array jeweils das nächste beste Bilde, welches noch nicht zu häufig verwendet wurde, gesucht. Die beiden gefundenen Werte, werden auf nähe zum gesuchten Wert überprüft. Der nähere wird dementsprechend auserwählt.
+\end{sloppypar}
+
+\newpage
+
+\subsubsection{Skalieren der Bilder}
+Das Skalieren der Bilder ist in drei Schritte einzuteilen. Das Management der Bilder, Berechnen der Zielgröße und das Skalieren an sich. Ich werde auf jeden Bereich individuell eingehen.
+
+\paragraph{Management}
+Da Ein Bild mehrfach ausgewählt werden kann, ist es wichtig ein Management System zu haben, welches verhindert, dass das selbe Bild nicht häufiger als nötig skaliert wird. Das Skalieren ist der Zeitaufwendigste Prozess, daher sollte dieser minimiert werden. Jedes Bild kann in vier unterschiedlichen Größen verwendet werden. Die Größen kommen aus dem in (siehe Berechnen der Sektionen) beschriebenen vorgehen. Werden die Bilder nur in einer einheitlichen Größe skaliert Entstehen schwarze Linien im Bild.
+
+\begin{figure}[h]
+    \centering
+    \subfloat[\centering ohne mehrfach Skalierung]{
+        \includegraphics[height=5cm]{images/BadExample_BlackLines.png}
+    }
+    \subfloat[\centering mit mehrfach Skalierung]{
+        \includegraphics[height=5cm]{images/GodExample_NoBlackLines.png}
+    }
+    \caption[Schwarze Linien]{vierfache Skalierung der Bilder}
+\end{figure}
+
+Beim Managen wird demnach überprüft, ob ein bestimmtes Bild schon in der jeweiligen Größe vorhanden ist. Dazu wird eine Instanz der Klasse ``ScaledImages'' erzeugt. Diese Instanz fungiert als gemeinsamer Speicherort aller skalierten Bilder. Die Klasse hat ein zweidimensionales Array des Types ``ImageWithName'' und eine Methode ``exists()''. Die Methode ``exists()'' sucht mithilfe von dem Pfad des Bildes und den gewünschten Dimensionen in dem Array nach bereits skalierten Bildern. In dem Fall, dass etwas gefunden wird, werden die Koordinaten des gefunden Bildes zurückgegeben. Der Skalier-Thread speichert dan eine Referenz auf das gefundene Bild ab.
+\medskip
+\newline
+Ein Problem beinhaltet das System jedoch noch. Es könnte zu der Situation kommen, dass mehrere Threads gleichzeitig mit dem gleichem Bildauftrag gestartet werden. Anfangs überprüft jeder Thread, ob sie arbeiten dürfen, oder das gewünschte Bild noch nicht existiert. Alle Threads werden davon ausgehen, dass die Arbeiten dürfen, da das Skalieren des Bildes und Speichern dessen vergleichsweise länger dauert als einen neuen Thread zu starten. Doch dadurch werden nicht nur Ressourcen unnütz verbraucht, sondern auch Fehler in der Bilddatei können entstehen, da mehrere Threads gleichzeitig eine Datei auslesen.
