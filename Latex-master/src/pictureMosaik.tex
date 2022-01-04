@@ -88,3 +88,19 @@ Beim Managen wird demnach überprüft, ob ein bestimmtes Bild schon in der jewei
 \medskip
 \newline
 Ein Problem beinhaltet das System jedoch noch. Es könnte zu der Situation kommen, dass mehrere Threads gleichzeitig mit dem gleichem Bildauftrag gestartet werden. Anfangs überprüft jeder Thread, ob sie arbeiten dürfen, oder das gewünschte Bild noch nicht existiert. Alle Threads werden davon ausgehen, dass die Arbeiten dürfen, da das Skalieren des Bildes und Speichern dessen vergleichsweise länger dauert als einen neuen Thread zu starten. Doch dadurch werden nicht nur Ressourcen unnütz verbraucht, sondern auch Fehler in der Bilddatei können entstehen, da mehrere Threads gleichzeitig eine Datei auslesen.
+
+\begin{figure}[h]
+    \centering
+    \begin{minipage}{89mm}
+        \fontsize{10pt}{11pt}\selectfont% or whatever fontsize you like
+        \def\svgwidth{8cm}
+        \input{images/Manager_Threads.pdf_tex}
+    \end{minipage}
+    \begin{minipage}{1\textwidth-91mm}
+        1. Überprüfen, ob die Bilder schon vorhanden sind.\\
+        2. Schreiben des Bildes in das Array.
+    \end{minipage}
+    \caption[Thread und Manager]{Threads mit Manager}
+\end{figure}
+
+Um ein solches Verhalten zu verhindern, versucht ein Thread ein Bild zu reservieren, wenn es laut Manager frei ist. Ein Reserviertes Bild, wird als bereits existierendes gewertet. Das Referenz System funktioniert weiterhin, da 
