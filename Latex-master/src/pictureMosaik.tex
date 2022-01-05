@@ -103,4 +103,4 @@ Ein Problem beinhaltet das System jedoch noch. Es könnte zu der Situation komme
     \caption[Thread und Manager]{Threads mit Manager}
 \end{figure}
 
-Um ein solches Verhalten zu verhindern, versucht ein Thread ein Bild zu reservieren, wenn es laut Manager frei ist. Ein Reserviertes Bild, wird als bereits existierendes gewertet. Das Referenz System funktioniert weiterhin, da 
+Um ein solches Verhalten zu verhindern, versucht ein Thread ein Bild zu reservieren, wenn es laut Manager frei ist. Ein Reserviertes Bild, wird als bereits existierendes gewertet. Das Referenz System funktioniert weiterhin, da keine neuen Objekte erstellt werden, sondern diese nur mit dem Bild befüllt werden. Die Array Struktur wird durch rasantes steigen des Speicherverbrauchs einzelner Objekte nicht beeinflusst. Das liegt unter anderem an dem ``GarbageCollector'' von Java, welcher auch in Stande is Arrays aus ihrem sonnst linearem Besetzen eines Speicherblockes im Arbeitsspeicher aufzuteilen, um unter anderem größer werdenden Objekten platz zu schaffen. Dabei werden interne Referenzen des Arrays überschrieben, um zu dem verschobenem Objekt zu zeigen.
