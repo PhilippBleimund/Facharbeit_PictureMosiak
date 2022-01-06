@@ -104,3 +104,25 @@ Ein Problem beinhaltet das System jedoch noch. Es könnte zu der Situation komme
 \end{figure}
 
 Um ein solches Verhalten zu verhindern, versucht ein Thread ein Bild zu reservieren, wenn es laut Manager frei ist. Ein Reserviertes Bild, wird als bereits existierendes gewertet. Das Referenz System funktioniert weiterhin, da keine neuen Objekte erstellt werden, sondern diese nur mit dem Bild befüllt werden. Die Array Struktur wird durch rasantes steigen des Speicherverbrauchs einzelner Objekte nicht beeinflusst. Das liegt unter anderem an dem ``GarbageCollector'' von Java, welcher auch in Stande is Arrays aus ihrem sonnst linearem Besetzen eines Speicherblockes im Arbeitsspeicher aufzuteilen, um unter anderem größer werdenden Objekten platz zu schaffen. Dabei werden interne Referenzen des Arrays überschrieben, um zu dem verschobenem Objekt zu zeigen.
+
+\newpage
+
+\paragraph{Berechnen der Zielgröße}
+Das Ziel ist, die Bilder so gut wie möglich zu verwerten. Dazu müssen unterschiedliche Kriterien erfüllt werden. Erstens sollte das Bild nicht verzogen werden, zweitens sollte immer der größtmögliche Bereich des Bildes verwendet werden.
+
+\begin{figure}[h]
+    \centering
+    \fontsize{12pt}{12pt}\selectfont% or whatever fontsize you like
+    \def\svgwidth{12cm}
+    \input{images/BerechnenZielgröße.pdf_tex}
+    \caption[Berechnen Zielgröße]{Berechnen Zielgröße}
+\end{figure}
+
+Um das zu erreichen wird das Bild erst auf die Größe des gewünschten Sektors skaliert. Anschließend werden die Ränder abgeschnitten. Beim Skalieren wird versucht eine x-Achse des Bildes der y-Achse des Sektors anzupassen. Damit kann sichergestellt werden, dass das Bild seine Verhältnis beibehält. Wie in der oberen Grafik zu erkennen ist, wird ein Vertikal ausgerichtetes Bild in einen Horizontalen Sektor eingesetzt. Dazu wurde die x-Achse des Bildes auf die des Sektors skaliert. Die y-Achse wird mit der Formel $y_\mathnormal{Bild\,neu}=y_\mathnormal{Bild\,alt} \cdot \frac{x_\mathnormal{sek.}}{x_\mathnormal{Bild\,alt}}$ Berechnet. Wenn die neu berechnete y-Achse kleiner ist als die des Sektors wird das selbe mit der x-Achse gemacht. Im letzten Schritt wird ein Abschnitt mittig aus dem skaliertem Bild mit den Abmaßen des Sektors geschnitten.
+
+\paragraph{Skalieren des Bildes}
+Einleitend muss ich zu diesem Abschnitt sagen, dass ich die Folgenden Methoden nicht selber implementiert habe. Ich nutzte dazu die Skalr library von.
+
+\begin{center} %50 -15
+    \input{images/bilinearInterpolation.tex}
+\end{center}

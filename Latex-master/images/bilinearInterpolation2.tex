@@ -1,0 +1,76 @@
+\tdplotsetmaincoords{50}{-15}
+    \begin{tikzpicture}[tdplot_main_coords, scale = 1]
+        \filldraw[draw = black, fill = blue, opacity = 0.2](0,0,0) -- (3,0,0) -- (3, 3, 0) -- (0, 3, 0);
+
+        \def \xy{{  {2, 1, 0.5, 1}, 
+                    {4, 1, 2, 3}, 
+                    {3, 2, 4, 1}, 
+                    {0.5, 3, 5, 4}}}
+
+        \foreach \x in {0,...,3}{
+            \foreach \y in {0,...,3}{
+                \draw[fill = black](0,0,0) circle (2pt);
+                \pgfmathsetmacro\asInt{int(\xy[\x][\y])}
+                \pgfmathsetmacro\r{(\asInt+1)/2}
+                \draw[black](\x, 0, 0) -- (\x,3,0);
+                \draw[black](0,\y,0) -- (3,\y,0);
+                %bottom
+                \filldraw[draw = black, fill = red, opacity = 0.2](\x,\y,0) -- (\x+1,\y,0) -- (\x+1,\y+1,0) -- (\x,\y+1,0);
+                %top
+                \filldraw[draw = black, fill = red, opacity = 0.5](\x,\y,\r) -- (\x+1,\y,\r) -- (\x+1,\y+1,\r) -- (\x,\y+1,\r);
+                %front
+                \filldraw[draw = black, fill = red, opacity = 0.2](\x,\y,0) -- (\x+1,\y,0) -- (\x+1,\y,\r) -- (\x,\y,\r);
+                %back
+                \filldraw[draw = black, fill = red, opacity = 0.2](\x,\y+1,0) -- (\x+1,\y+1,0) -- (\x+1,\y+1,\r) -- (\x,\y+1,\r);
+                %rigth
+                \filldraw[draw = black, fill = red, opacity = 0.3](\x+1,\y,0) -- (\x+1,\y+1,0) -- (\x+1,\y+1,\r) -- (\x+1,\y,\r);
+                %left
+                \filldraw[draw = black, fill = red, opacity = 0.4](\x,\y,0) -- (\x,\y+1,0) -- (\x,\y+1,\r) -- (\x,\y,\r);
+            }
+        }
+        \foreach \x in {0,...,2}{
+            \foreach \y in {0,...,2}{
+                \pgfmathsetmacro\asInt{int(\xy[\y][\x])}
+                \pgfmathsetmacro\r{(\asInt+1)/2}
+                
+                \pgfmathsetmacro\nextx{\x==2 ? \x+0.5 : \x+1.5}
+                \pgfmathsetmacro\nexty{\y==2 ? \y+0.5 : \y+1.5}
+
+                \pgfmathsetmacro\nextXAsInt{int(\xy[int(\y)][int(\nextx)])}
+                \pgfmathsetmacro\nextXr{(\nextXAsInt+1)/2}
+                \pgfmathsetmacro\nextYAsInt{int(\xy[int(\nexty)][int(\x)])}
+                \pgfmathsetmacro\nextYr{(\nextYAsInt+1)/2}
+                \pgfmathsetmacro\nextXYAsInt{int(\xy[int(\nexty)][int(\nextx)])}
+                \pgfmathsetmacro\nextXYr{(\nextXYAsInt+1)/2}
+
+                \draw[thick, blue, -](\x+0.5,\y+0.5,0) -- (\x+0.5,\y+0.5,\r);
+                \draw[fill = blue](\x+0.5,\y+0.5,\r) circle (2pt);
+                \draw[thick, green, -](\x+0.5,\y+0.5,\r) -- (\nextx,\y+0.5,\nextXr);
+                \draw[thick, green, -](\x+0.5,\y+0.5,\r) -- (\x+0.5,\nexty,\nextYr);
+                
+                \ifnum\x<2
+                \ifnum\y<2
+                    \pgfmathsetmacro\stepXY{1/2}
+                    \pgfmathsetmacro\stepXXR{(\nextXr-\r)/2}
+                    \pgfmathsetmacro\stepYYR{(\nextYr-\r)/2}
+                    \pgfmathsetmacro\stepXYR{(\nextXYr-\nextYr)/2}
+                    \pgfmathsetmacro\stepYXR{(\nextXYr-\nextXr)/2}
+                    \foreach \xx in {0,...,0}{
+                        \foreach \yy in {0,...,0}{
+                            \pgfmathsetmacro\newX{\stepXY*(\xx+1)}
+                            \pgfmathsetmacro\newY{\stepXY*(\yy+1)}
+                            \pgfmathsetmacro\newXR{\r+\stepXXR*(\xx+1)}
+                            \pgfmathsetmacro\newYR{\r+\stepYYR*(\yy+1)}
+                            
+                            \pgfmathsetmacro\nextYR{\nextYr+\stepXYR*(\xx+1)}
+                            \pgfmathsetmacro\nextXR{\nextXr+\stepYXR*(\yy+1)}
+
+                            \draw[thick, orange, -](\x+0.5+\newX,\y+0.5,\newXR) -- (\x+0.5+\newX,\y+1.5,\nextYR);
+                            \draw[thick, orange, -](\x+0.5,\y+0.5+\newY,\newYR) -- (\x+1.5,\y+0.5+\newY,\nextXR);
+                        }
+                    }
+                \fi
+                \fi
+            }
+        }
+    \end{tikzpicture}
