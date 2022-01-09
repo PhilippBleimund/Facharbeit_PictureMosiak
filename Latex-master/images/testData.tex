@@ -1,0 +1,15 @@
+\begin{tikzpicture}
+    \begin{axis}[
+        xmode=log,
+        ymode=log,
+        xlabel=$f$ (\hertz), % \hertz requires SIunits
+        ylabel=$T$ (-),
+        title={Measured transfer function of analogue filter},
+        grid=both,
+        minor grid style={gray!25},
+        major grid style={gray!25},
+        width=0.75\linewidth,
+        no marks]
+    \addplot[line width=1pt,solid,color=blue] %
+        table[x=f,y=T,col sep=comma]{images/hjocas.txt};
+\end{tikzpicture}

@@ -1,0 +1,16 @@
+\begin{tikzpicture}[scale = 0.1]
+    \def \xy {{{4890,3263},
+               {4192,2797},
+               {3594,2398},
+               {3081,2056},
+               {2641,1763},
+               {2264,1512}}}
+
+    \foreach \x in {0,...,5}{
+        \pgfmathsetmacro\width{int(\xy[\x][0])/100}
+        \pgfmathsetmacro\height{int(\xy[\x][1])/100}
+        \draw[black](0,0)--(\width,0)--(\width,\height)--(0,\height)--(0,0);
+        \node[] at (\width-2.5,\height-2.5) (a) {\x};
+    }
+
+\end{tikzpicture}

@@ -1,3 +1,4 @@
+%draft
 \documentclass[12pt,a4paper]{article}
 \usepackage[left=2.5cm, right=4.5cm, top=2.5cm, bottom=2cm]{geometry}
 \usepackage[onehalfspacing]{setspace}
@@ -7,6 +8,7 @@
 \setlength\parindent{0pt}
 
 \input{src/packages.tex}
+\numberwithin{equation}{section}
 
 \begin{document}
 
@@ -15,7 +17,10 @@
 \clearpage
 \setcounter{page}{1}
 \newpage
-
-\input{src/pictureMosaik.tex}
+%The Programm section
+\input{src/Programm/Einleitung.tex}
+\newpage
+\input{src/Programm/Idee.tex}
+\input{src/Programm/Implementierung.tex}
 
 \end{document}
