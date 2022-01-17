@@ -11,7 +11,10 @@
 \usepackage{pgfmath}
 \usepackage{ifthen}
 \usepackage{pgfplots}
+\usepgfplotslibrary{groupplots}
 \usepgfplotslibrary{fillbetween}
+\usepackage{caption,subcaption}  
 \usepackage{amsmath}
 
+\renewcommand\thesubfigure{(\alph{subfigure})}
 \newcommand{\equationRef}[1]{Gleichung \ref{#1}}
