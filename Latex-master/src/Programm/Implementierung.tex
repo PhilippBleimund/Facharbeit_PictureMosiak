@@ -69,7 +69,7 @@ Ein Problem beinhaltet das System jedoch noch. Es könnte zu der Situation komme
 \begin{figure}[h]
     \centering
     \begin{minipage}{89mm}
-        \fontsize{10pt}{11pt}\selectfont% or whatever fontsize you like
+        \fontsize{10pt}{11pt}\selectfont
         \def\svgwidth{8cm}
         \input{images/Manager_Threads.pdf_tex}
     \end{minipage}
@@ -126,7 +126,7 @@ Die unterschiedlichen Höhen in der der Grafik repräsentieren die Unterschiedli
     W_\mathnormal{neuY}=(W_\mathnormal{1\,1}-W_\mathnormal{0\,1})\cdot\frac{n_x}{S_\mathnormal{fak.}} \label{eq:WNeuY}\\
     W_\mathnormal{neu}=W_\mathnormal{0\,0}+(W_\mathnormal{neuX})+(W_\mathnormal{neuY}-W_\mathnormal{neuX})\cdot\frac{n_y}{S_\mathnormal{fak.}} \label{eq:WNeu}
 \end{flalign}
-In den Gleichungen \equationRef{eq:WNeuX} und \equationRef{eq:WNeuY} werden die Start- und End-Punkte einer Netzlinie berechnet. $n_x$ und $n_y$ sind Zähler, welche die gewünschte Position in dem Teilnetz angibt. Das Maximum der beiden ist $S_\mathnormal{fak.}+1$. $S_\mathnormal{fak.}$ ist dabei der Faktor, um wie viel das Bild skaliert werden soll. Der Unterschied zischen Bilinearer Interpolation und Bikubischen ist, dass bei der Bilinearen lediglich zwei Linien aus jeweils zwei Punkte benutzt werden. Bei der Bikubischen werden vier kubische Spline Funktion aus jeweils vier Punkten benutzt. Der Vorteil der Bikubischen ist, dass das resultierende Bild einen höheren Kontrast bekommt. Auch können Komplexere Formen besser berücksichtigt werden.
+In den Gleichungen \ref{eq:WNeuX} und \ref{eq:WNeuY} werden die Start- und End-Punkte einer Netzlinie berechnet. $n_x$ und $n_y$ sind Zähler, welche die gewünschte Position in dem Teilnetz angibt. Das Maximum der beiden ist $S_\mathnormal{fak.}+1$. $S_\mathnormal{fak.}$ ist dabei der Faktor, um wie viel das Bild skaliert werden soll. Der Unterschied zischen Bilinearer Interpolation und Bikubischen ist, dass bei der Bilinearen lediglich zwei Linien aus jeweils zwei Punkte benutzt werden. Bei der Bikubischen werden vier kubische Spline Funktion aus jeweils vier Punkten benutzt. Der Vorteil der Bikubischen ist, dass das resultierende Bild einen höheren Kontrast bekommt. Auch können Komplexere Formen besser berücksichtigt werden.
 
 \begin{figure}[h]
     \centering

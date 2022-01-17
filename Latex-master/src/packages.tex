@@ -5,16 +5,24 @@
 \usepackage{sidecap}
 \usepackage{tikz}
 \usetikzlibrary{calc}
+\usepackage{environ}
 \usepackage{tikz-3dplot}
 \usepackage{import}
 \usepackage{calc}
 \usepackage{pgfmath}
 \usepackage{ifthen}
 \usepackage{pgfplots}
-\usepgfplotslibrary{groupplots}
 \usepgfplotslibrary{fillbetween}
-\usepackage{caption,subcaption}  
 \usepackage{amsmath}
 
-\renewcommand\thesubfigure{(\alph{subfigure})}
-\newcommand{\equationRef}[1]{Gleichung \ref{#1}}
+\usepackage{xr}
+
+\NewEnviron{scaletikzpicturetowidth}[1]{%
+  \def\tikz@width{#1}%
+  \def\tikzscale{1}\begin{lrbox}{\measure@tikzpicture}%
+  \BODY
+  \end{lrbox}%
+  \pgfmathparse{#1/\wd\measure@tikzpicture}%
+  \edef\tikzscale{\pgfmathresult}%
+  \BODY
+}
