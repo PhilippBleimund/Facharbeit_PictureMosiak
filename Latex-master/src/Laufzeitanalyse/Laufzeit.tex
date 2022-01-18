@@ -9,7 +9,7 @@ Um die Effizienz des Programms beurteilen zu können, werde ich die einzelnen Al
                 /pgf/number format/fixed,
                 /pgf/number format/fixed zerofill,
                 /pgf/number format/precision=1
-            }, legend pos=north west, no markers]
+            }, legend pos=north west, no markers, legend style={nodes={scale=0.7, transform shape}}]
                 \addplot table [x=x, y=time, col sep=semicolon] {./images/Simulationen/Database_1.000x10.000.csv};
                 \addlegendentry{Zeit in ns}
                 \addplot table [x=x, y=ram, col sep=semicolon] {./images/Simulationen/Database_1.000x10.000.csv};
@@ -24,7 +24,7 @@ Um die Effizienz des Programms beurteilen zu können, werde ich die einzelnen Al
                 /pgf/number format/fixed,
                 /pgf/number format/fixed zerofill,
                 /pgf/number format/precision=1
-            }, legend pos=north west, no markers]
+            }, legend pos=north west, no markers, legend style={nodes={scale=0.7, transform shape}}]
                 \addplot table [x=x, y=time, col sep=semicolon] {./images/Simulationen/averageColor_500x50_500x500_Ultra.csv};
                 \addlegendentry{Zeit in ns}
                 \addplot table [x=x, y=ram, col sep=semicolon] {./images/Simulationen/averageColor_500x50_500x500_Ultra.csv};
@@ -40,11 +40,15 @@ Um die Effizienz des Programms beurteilen zu können, werde ich die einzelnen Al
                 /pgf/number format/fixed,
                 /pgf/number format/fixed zerofill,
                 /pgf/number format/precision=1
-            }, legend pos=north west, no markers]
+            }, legend pos=north west, no markers, legend style={nodes={scale=0.7, transform shape}}]
                 \addplot table [x=x, y=time, col sep=semicolon] {./images/Simulationen/scalingImages.csv};
-                \addlegendentry{Zeit in ns}
+                \addlegendentry{Bilinear(ns)}
+                \addplot table [x=x, y=time, col sep=semicolon] {./images/Simulationen/scalingImagesBikubisch.csv};
+                \addlegendentry{Bikubisch(ns)}
                 \addplot table [x=x, y=ram, col sep=semicolon] {./images/Simulationen/scalingImages.csv};
-                \addlegendentry{Ram in Byte}
+                \addlegendentry{Bilinear(Byte)}
+                \addplot table [x=x, y=ram, col sep=semicolon] {./images/Simulationen/scalingImagesBikubisch.csv};
+                \addlegendentry{Bikubisch(Byte)}
             \end{axis}
         \end{tikzpicture}
         \label{SkalierenGraph}
@@ -55,7 +59,7 @@ Um die Effizienz des Programms beurteilen zu können, werde ich die einzelnen Al
                 /pgf/number format/fixed,
                 /pgf/number format/fixed zerofill,
                 /pgf/number format/precision=1
-            }, legend pos=north west, no markers]
+            }, legend pos=north west, no markers, legend style={nodes={scale=0.7, transform shape}}]
                 \addplot table [x=x, y=time, col sep=semicolon] {./images/Simulationen/computation.csv};
                 \addlegendentry{Zeit in ns}
                 \addplot table [x=x, y=ram, col sep=semicolon] {./images/Simulationen/computation.csv};
