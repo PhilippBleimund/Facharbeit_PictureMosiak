@@ -6,6 +6,7 @@
 \usepackage{sidecap}
 \usepackage{tikz}
 \usetikzlibrary{calc}
+\usetikzlibrary{shapes,arrows}
 \usepackage{environ}
 \usepackage{tikz-3dplot}
 \usepackage{import}
@@ -22,5 +23,14 @@
 \usepackage[perpage, hang]{footmisc}
 \usepackage{tablefootnote}
 \usepackage{tabularx} % in the preamble
-
+\usepackage{textcomp}
 \setlength\footnotemargin{10pt}
+
+\tikzset{%
+  block/.style    = {draw, thick, rectangle, minimum height = 3em,
+    minimum width = 3em},
+  sum/.style      = {draw, circle, node distance = 1.5cm}, % Adder
+  input/.style    = {coordinate}, % Input
+  output/.style   = {coordinate}, % Output
+   base/.style = {rectangle, rounded corners, draw=black, minimum width=2cm, minimum height=1cm, text centered}
+}
