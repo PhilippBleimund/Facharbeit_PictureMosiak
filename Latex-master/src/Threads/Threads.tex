@@ -57,11 +57,11 @@ Da ein Prozess viele Kontextwechsel durchleben wird, muss das Betriebssystem bes
     \item Akkumulator - Speichert, Ergebnisse der ALU
 \end{itemize}
 
-Dies sind die wichtigsten Informationen, um die Rechenoperationen weiterführen zu können. Das Betriebssystem braucht jedoch noch weitere Informationen über einen Prozess. Die wichtigsten davon sind:
+Dies sind die wichtigsten Informationen, um die Rechenoperationen weiterführen zu können. Das Betriebssystem braucht jedoch noch weitere Informationen über einen Prozess. Diese werden auch Systemkontext genannt. Die wichtigsten davon sind:
 
 \begin{itemize}
     \setlength\itemsep{0pt}
-    \item Ort in der Prozesstabelle - In der Prozesstabelle werden Prozesskontrollblöcke gespeichert. Diese beinhalten alle Informationen über den Prozess.
+    \item Ort in der Prozesstabelle
     \item PID - Prozessnummer
     \item Prozesszustand
     \item Priorität
@@ -72,7 +72,15 @@ Dies sind die wichtigsten Informationen, um die Rechenoperationen weiterführen 
     \item Zugeordnete Geräte - Maus, Tastatur, ...
 \end{itemize}
 
-\subsection{Leben eines Prozesses}
+Mithilfe der Prozesstabelle kann das Betriebssystem die einzelnen Prozesse speichern. In dieser werden Prozesskontrollblöcke gespeichert, welche den Hardwarekontext und Systemkontext beinhaltet. Bei einem Kontextwechsel wird der Prozesskontext aus der Prozesstabelle wieder hergestellt.
+
+\subsection{Verwalten der Prozesse}
+
+\begin{figure}
+    \input{images/Threads/Warteschlange.tex}
+    \caption{Warteschlangen System}
+\end{figure}
+
 \begin{center}
     \begin{tikzpicture}[auto, thick, node distance=2cm, >=triangle 45]
         \draw
