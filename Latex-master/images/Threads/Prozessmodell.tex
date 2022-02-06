@@ -1,0 +1,40 @@
+\begin{tikzpicture}
+    %neu
+    \draw[very thick, -{Stealth[scale=1.5]}](7, 1) -- (7, 2);
+    \filldraw[very thick, draw = black, fill = black!10](6, 3) rectangle (8, 2) node[pos=.5] {\small neu};
+
+    %bereit
+    \draw[very thick, -{Stealth[scale=1.5]}](7, 3) -- (7, 4);
+    \filldraw[very thick, draw = black, fill = black!10](6, 5) rectangle (8, 4) node[pos=.5] {\small bereit};
+    \draw[very thick, -{Stealth[scale=1.5]}](8, 4.3) -- (11, 4.3) node [midway, below] {\small timeout};
+    \draw[very thick, -{Stealth[scale=1.5]}](6, 4.7) -- (3, 4.7) node [midway, above] {\small suspendieren};
+
+    %blockiert
+    \draw[very thick, -{Stealth[scale=1.5]}](7, 6.5) -- (7, 5);
+    \filldraw[very thick, draw = black, fill = black!10](6, 7.5) rectangle (8, 6.5) node[pos=.5] {\small blockiert};
+    \draw[very thick, -{Stealth[scale=1.5]}](6, 7.2) -- (3, 7.2) node [midway, above] {\small suspendieren};
+    
+    %beendet
+    \filldraw[very thick, draw = black, fill = black!10](11, 3) rectangle (13, 2) node[pos=.5] {\small beendet};
+    \draw[very thick, -{Stealth[scale=1.5]}](12, 2) -- (12, 1);
+
+    %rechnend
+    \draw[very thick, -{Stealth[scale=1.5]}](12, 4) -- (12, 3);
+    \filldraw[very thick, draw = black, fill = black!10](11, 5) rectangle (13, 4) node[pos=.5] {\small rechnend};
+    \draw[very thick, -{Stealth[scale=1.5]}](11, 4.7) -- (8, 4.7) node [midway, above] {\small dispatch};
+    \draw[very thick](11.5, 5) -- (11.5, 7);
+    \draw[very thick, -{Stealth[scale=1.5]}](11.5, 7) -- (8, 7) node [midway, above, align=center] {\small Warten auf \\\small Ereignis};
+    \draw[very thick](12.5, 5) -- (12.5, 9);
+    \draw[very thick](12.5, 9) -- (0, 9) node [midway, above] {\small suspendieren};
+    \draw[very thick](0, 9) -- (0, 4.5);
+    \draw[very thick, -{Stealth[scale=1.5]}](0, 4.5) -- (1, 4.5);
+
+    %bereit suspendiert
+    \filldraw[very thick, draw = black, fill = black!10](1, 5) rectangle (3, 4) node[pos=.5, align=center] {\small bereit\\\small suspendiert};
+    \draw[very thick, -{Stealth[scale=1.5]}](3, 4.3) -- (6, 4.3) node [midway, below] {\small aktivieren};
+
+    %blockiert suspendiert
+    \filldraw[very thick, draw = black, fill = black!10](1, 7.5) rectangle (3, 6.5) node[pos=.5, align=center] {\small blockiert\\\small suspendiert};
+    \draw[very thick, -{Stealth[scale=1.5]}](2, 6.5) -- (2, 5);
+    \draw[very thick, -{Stealth[scale=1.5]}](3, 6.8) -- (6, 6.8) node [midway, below] {\small aktivieren};
+\end{tikzpicture}

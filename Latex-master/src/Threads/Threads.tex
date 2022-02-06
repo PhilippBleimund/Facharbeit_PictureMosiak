@@ -75,11 +75,19 @@ Dies sind die wichtigsten Informationen, um die Rechenoperationen weiterführen 
 Mithilfe der Prozesstabelle kann das Betriebssystem die einzelnen Prozesse speichern. In dieser werden Prozesskontrollblöcke gespeichert, welche den Hardwarekontext und Systemkontext beinhaltet. Bei einem Kontextwechsel wird der Prozesskontext aus der Prozesstabelle wieder hergestellt.
 
 \subsection{Verwalten der Prozesse}
-
-\begin{figure}
+Mithilfe der Prozesstabelle kann das Betriebssystem die einzelnen Prozesse speichern. In dieser werden Prozesskontrollblöcke gespeichert, welche den Hardwarekontext und Systemkontext beinhaltet. Bei einem Kontextwechsel wird der Prozesskontext aus der Prozesstabelle wieder hergestellt.\\
+\begin{figure}[!h]
+    \centering
     \input{images/Threads/Warteschlange.tex}
     \caption{Warteschlangen System}
 \end{figure}
+
+\begin{figure}[!h]
+    \centering
+    \input{images/Threads/Prozessmodell.tex}
+    \caption{Warteschlangen System}
+\end{figure}
+
 
 \begin{center}
     \begin{tikzpicture}[auto, thick, node distance=2cm, >=triangle 45]
@@ -100,6 +108,8 @@ Mithilfe der Prozesstabelle kann das Betriebssystem die einzelnen Prozesse speic
         \draw[->](beendet.south) -- node{} (friedhof);
     \end{tikzpicture}
 \end{center}
+
+ \newpage
 
 \subsection{In Windows}
 \subsection{Auf der CPU}
