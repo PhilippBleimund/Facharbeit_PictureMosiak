@@ -26,7 +26,10 @@
 \usepackage{tabularx} % in the preamble
 \usepackage{textcomp}
 \usepackage[section]{placeins}
+\usepackage{hyperref}
 \setlength\footnotemargin{10pt}
+
+\newcommand{\captionref} [1]{\textit{\nameref{#1}}}
 
 \tikzset{%
   block/.style    = {draw, thick, rectangle, minimum height = 3em,

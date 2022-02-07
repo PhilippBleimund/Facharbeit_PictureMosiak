@@ -1,4 +1,4 @@
-\begin{tikzpicture}[y=-1cm]
+\begin{tikzpicture}[y=-1cm, scale=0.8]
     \pgfmathsetmacro\start{2}
     \pgfmathsetmacro\endValue{5}
     \draw[very thick, -{Stealth[scale=1.5]}](-2,1.5) -- (\start,1.5);
@@ -9,7 +9,7 @@
     }
 
     \pgfmathsetmacro\middleLine{\start+((\endValue+1)/2)}
-    \node[align=center] at (\middleLine, 0.7){\large Warteschlange \small(bereit)};
+    \node[align=center] at (\middleLine, 0.7){\small Warteschlange \footnotesize(bereit)};
 
     \draw[very thick, -{Stealth[scale=1.5]}](\start+\endValue+1,1.5) -- (\start+\endValue+3,1.5);
 
@@ -23,29 +23,29 @@
     \draw[very thick, -{Stealth[scale=1.5]}](-1, 9) -- (-1, 1.5);
 
     %Entzug der CPU
-    \draw[very thick, -{Stealth[scale=1.5]}](\middleCPU, 3) -- (-1, 3) node [midway, above] {\large Entzug \small (timeout)};
+    \draw[very thick, -{Stealth[scale=1.5]}](\middleCPU, 3) -- (-1, 3) node [midway, above] {\small Entzug \footnotesize (timeout)};
 
     %Event 1
-    \draw[very thick, -{Stealth[scale=1.5]}](\middleCPU, 4.5) -- (\endLine, 4.5) node [midway, above] {\large timeout};
+    \draw[very thick, -{Stealth[scale=1.5]}](\middleCPU, 4.5) -- (\endLine, 4.5) node [midway, above] {\small timeout};
     \foreach \x in {0,...,\endValue}{
-        \filldraw[very thick, draw = black, fill = black!10](\start+\x, 4) rectangle (\start+\x+1, 5) node[pos=.5] {\large 1};
+        \filldraw[very thick, draw = black, fill = black!10](\start+\x, 4) rectangle (\start+\x+1, 5) node[pos=.5] {\small 1};
     }
-    \node[align=center] at (\middleLine, 3.7){\large Warteschlange \small(blockiert)};
-    \draw[very thick](\start, 4.5) -- (-1, 4.5) node [midway, above, align=center] {\large Event 1\\\large eingetreten};
+    \node[align=center] at (\middleLine, 3.7){\small Warteschlange \footnotesize(blockiert)};
+    \draw[very thick](\start, 4.5) -- (-1, 4.5) node [midway, above, align=center] {\small Event 1\\\small eingetreten};
 
     %Event 2
-    \draw[very thick, -{Stealth[scale=1.5]}](\middleCPU, 6.5) -- (\endLine, 6.5) node [midway, above] {\large timeout};
+    \draw[very thick, -{Stealth[scale=1.5]}](\middleCPU, 6.5) -- (\endLine, 6.5) node [midway, above] {\small timeout};
     \foreach \x in {0,...,\endValue}{
-        \filldraw[very thick, draw = black, fill = black!10](\start+\x, 6) rectangle (\start+\x+1, 7) node[pos=.5] {\large 2};
+        \filldraw[very thick, draw = black, fill = black!10](\start+\x, 6) rectangle (\start+\x+1, 7) node[pos=.5] {\small 2};
     }
-    \node[align=center] at (\middleLine, 5.7){\large Warteschlange \small(blockiert)};
-    \draw[very thick](\start, 6.5) -- (-1, 6.5) node [midway, above, align=center] {\large Event 2\\\large eingetreten};
+    \node[align=center] at (\middleLine, 5.7){\small Warteschlange \footnotesize(blockiert)};
+    \draw[very thick](\start, 6.5) -- (-1, 6.5) node [midway, above, align=center] {\small Event 2\\\small eingetreten};
 
     %Event n
-    \draw[very thick, -{Stealth[scale=1.5]}](\middleCPU, 9) -- (\endLine, 9) node [midway, above] {\large timeout};
+    \draw[very thick, -{Stealth[scale=1.5]}](\middleCPU, 9) -- (\endLine, 9) node [midway, above] {\small timeout};
     \foreach \x in {0,...,\endValue}{
-        \filldraw[very thick, draw = black, fill = black!10](\start+\x, 8.5) rectangle (\start+\x+1, 9.5) node[pos=.5] {\large n};
+        \filldraw[very thick, draw = black, fill = black!10](\start+\x, 8.5) rectangle (\start+\x+1, 9.5) node[pos=.5] {\small n};
     }
-    \node[align=center] at (\middleLine, 8.2){\large Warteschlange \small(blockiert)};
-    \draw[very thick](\start, 9) -- (-1, 9) node [midway, above, align=center] {\large Event n\\\large eingetreten};
+    \node[align=center] at (\middleLine, 8.2){\small Warteschlange \footnotesize(blockiert)};
+    \draw[very thick](\start, 9) -- (-1, 9) node [midway, above, align=center] {\small Event n\\\small eingetreten};
 \end{tikzpicture}

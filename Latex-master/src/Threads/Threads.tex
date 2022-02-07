@@ -66,7 +66,7 @@ Dies sind die wichtigsten Informationen, um die Rechenoperationen weiterführen 
     \item Prozesszustand
     \item Priorität
     \item Eltern- oder Kindprozesse
-    \item Zugriffsrechte - Linux: -19 bis 19; Windows: Rechte werden einzeln zugeteilt
+    \item Zugriffsrechte - Linux: -20 bis 19; Windows: Rechte werden einzeln zugeteilt
     \item Erlaubte Ressourcenmengen - Bsp. Maximaler RAM verbrauch
     \item Verwendete Dateien - Um zu verhindern, dass mehre Prozesse an einer Datei arbeiten
     \item Zugeordnete Geräte - Maus, Tastatur, ...
@@ -74,42 +74,27 @@ Dies sind die wichtigsten Informationen, um die Rechenoperationen weiterführen 
 
 Mithilfe der Prozesstabelle kann das Betriebssystem die einzelnen Prozesse speichern. In dieser werden Prozesskontrollblöcke gespeichert, welche den Hardwarekontext und Systemkontext beinhaltet. Bei einem Kontextwechsel wird der Prozesskontext aus der Prozesstabelle wieder hergestellt.
 
+\newpage
+
 \subsection{Verwalten der Prozesse}
-Mithilfe der Prozesstabelle kann das Betriebssystem die einzelnen Prozesse speichern. In dieser werden Prozesskontrollblöcke gespeichert, welche den Hardwarekontext und Systemkontext beinhaltet. Bei einem Kontextwechsel wird der Prozesskontext aus der Prozesstabelle wieder hergestellt.\\
-\begin{figure}[!h]
+
+Jedes Betriebssystem muss einen weg haben, um effektiv die Kontextwechsel der Prozesse durchführen zu können. Dazu wird in den meisten Fällen ein Warteschlangen System verwendet. Auch hat ein Prozess deutlich mehr Zustände als nur \textit{untätig} und \textit{rechnend} in einem modernen Betriebssystem. Dazu wird heutzutage meistens das \captionref{Prozessmodell} oder eine modifizierte Variante. Linux als Beispiel verwendet ein \textit{}
+
+\begin{figure}[h]
     \centering
     \input{images/Threads/Warteschlange.tex}
     \caption{Warteschlangen System}
+    \label{Warteschlange Prozesse}
 \end{figure}
 
-\begin{figure}[!h]
+\begin{figure}[h]
     \centering
     \input{images/Threads/Prozessmodell.tex}
-    \caption{Warteschlangen System}
+    \caption{7-Zustands Prozessmodell}
+    \label{Prozessmodell}
 \end{figure}
 
-
-\begin{center}
-    \begin{tikzpicture}[auto, thick, node distance=2cm, >=triangle 45]
-        \draw
-        node at(0,0)[sum, name=start]{}
-        node [base, name=bereit, right of=start]{bereit}
-        node [base, name=aktiv, node distance=3cm, right of=bereit]{aktiv}
-        node [base, name=beendet, node distance=3cm, right of=aktiv]{beendet};
-        \draw
-        node at(3.5,-2)[base, name=blockiert]{blockiert}
-        node [sum, name=friedhof, node distance=2cm, below of=beendet]{};
-        \draw[->](start) -- node{} (bereit.west);
-        \path[->](bereit.east) edge[bend right=50] node{} (aktiv.west);
-        \path[->](aktiv.west) edge[bend right=50] node{} (bereit.east);
-        \path[->](aktiv.south) edge[bend left=20] node{} (blockiert.north);
-        \path[->](blockiert.north) edge[bend left=20] node{} (bereit.south);
-        \draw[->](aktiv.east) -- node{} (beendet.west);
-        \draw[->](beendet.south) -- node{} (friedhof);
-    \end{tikzpicture}
-\end{center}
-
- \newpage
+\newpage
 
 \subsection{In Windows}
 \subsection{Auf der CPU}
