@@ -1,7 +1,7 @@
 \begin{tikzpicture}[y=-1cm, scale=0.8]
     \pgfmathsetmacro\start{2}
     \pgfmathsetmacro\endValue{5}
-    \draw[very thick, -{Stealth[scale=1.5]}](-2,1.5) -- (\start,1.5);
+    \draw[very thick, -{Stealth[scale=1.5]}](-2,1.5) -- (\start,1.5) node [midway, above] {\small Erzeugung};
 
     %Warteschlange
     \foreach \x in {0,...,\endValue}{

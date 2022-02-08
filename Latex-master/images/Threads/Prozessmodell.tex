@@ -10,7 +10,7 @@
     \draw[very thick, -{Stealth[scale=1.5]}](6, 4.7) -- (3, 4.7) node [midway, above] {\small suspendieren};
 
     %blockiert
-    \draw[very thick, -{Stealth[scale=1.5]}](7, 6.5) -- (7, 5);
+    \draw[very thick, -{Stealth[scale=1.5]}](7, 6.5) -- (7, 5) node [midway, anchor=west, align=center] {\small Ereignis\\\small eingetreten};
     \filldraw[very thick, draw = black, fill = black!10](6, 7.5) rectangle (8, 6.5) node[pos=.5] {\small blockiert};
     \draw[very thick, -{Stealth[scale=1.5]}](6, 7.2) -- (3, 7.2) node [midway, above] {\small suspendieren};
     
@@ -35,6 +35,6 @@
 
     %blockiert suspendiert
     \filldraw[very thick, draw = black, fill = black!10](1, 7.5) rectangle (3, 6.5) node[pos=.5, align=center] {\small blockiert\\\small suspendiert};
-    \draw[very thick, -{Stealth[scale=1.5]}](2, 6.5) -- (2, 5);
+    \draw[very thick, -{Stealth[scale=1.5]}](2, 6.5) -- (2, 5) node [midway, anchor=east, align=center] {\small Ereignis\\\small eingetreten};
     \draw[very thick, -{Stealth[scale=1.5]}](3, 6.8) -- (6, 6.8) node [midway, below] {\small aktivieren};
 \end{tikzpicture}

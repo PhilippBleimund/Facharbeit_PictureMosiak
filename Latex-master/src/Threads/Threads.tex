@@ -78,7 +78,7 @@ Mithilfe der Prozesstabelle kann das Betriebssystem die einzelnen Prozesse speic
 
 \subsection{Verwalten der Prozesse}
 
-Jedes Betriebssystem muss einen weg haben, um effektiv die Kontextwechsel der Prozesse durchführen zu können. Dazu wird in den meisten Fällen ein Warteschlangen System verwendet. Auch hat ein Prozess deutlich mehr Zustände als nur \textit{untätig} und \textit{rechnend} in einem modernen Betriebssystem. Dazu wird heutzutage meistens das \captionref{Prozessmodell} oder eine modifizierte Variante. Linux als Beispiel verwendet ein \textit{}
+Jedes Betriebssystem muss einen weg haben, um effektiv die Kontextwechsel der Prozesse durchführen zu können. Dazu wird in den meisten Fällen ein \captionref{Warteschlange Prozesse} verwendet. Auch hat ein Prozess deutlich mehr Zustände als nur \textit{untätig} und \textit{rechnend} in einem modernen Betriebssystem. Dazu wird heutzutage meistens das \captionref{Prozessmodell} oder eine modifizierte Variante. Linux als Beispiel verwendet ein \textit{8-Zustands Prozessmodell}, welches das Modell mit einem \textit{kernel rechnend} Zustand erweitert.
 
 \begin{figure}[h]
     \centering
@@ -96,11 +96,26 @@ Jedes Betriebssystem muss einen weg haben, um effektiv die Kontextwechsel der Pr
 
 \newpage
 
-\subsection{In Windows}
-\subsection{Auf der CPU}
+Wie in der Einleitung schon angesprochen sind die Zustände \textit{bereit} und \textit{rechnend} die wichtigsten Zustände. Mit diesen alleine könnte ein Betriebssystem funktionieren. Es gäbe dazu dann nur eine Warteschlange, in der sich alle Prozesse des Zustandes \textit{bereit} befinden. Idealer Weise implementiert der \textit{Scheduler}\footnote{Programm zum Managen der Warteschlangen.}  einen Algorithmus, welcher die Priorität der Prozesse berücksichtigt. Wie schon erwähnt muss sich der \textit{Dispatcher}\footnote{Programm zum ausführen der Prozesswechsel.} um noch weitere Zustände kümmern. Diese und ihre Beziehungen sind in Grafik \ref{Prozessmodell} zu finden. Zwei davon währen \textit{neu} und \textit{beendet}. Diese sind für eine größere Flexibilität nützlich. Mit dem \textit{beendet} Zustand, können Informationen nachträglich von einem fertigen Prozess aufgerufen werden. Der Zustand \textit{neu} hat die gemeinsame Funktion mit dem \textit{beendet}-Zustand Ressourcen zu sparen.\newline
+Ein Entschiedener Fehler ist es anzunehmen, dass alle Prozesse jederzeit Arbeiten wollen. So könnte ein Programm auf eine Tastatur Eingabe oder andere Ereignisse warten. Um diese Funktionalität bereitstellen zu können gibt es den Zustand \textit{blockiert}. In diesen wechselt ein Prozess nach den berechnen und kann aus diesen sich wieder in die Warteschlange der bereiten Prozesse einordnen. In Grafik \ref{Warteschlange Prozesse} werden unterschiedliche Warteschlangen für unterschiedliche Ereignisse erzeugt. Dieses Vorgehen hat den Vorteil gegenüber einer einzelnen ``blockiert-Warteschlange'', dass häufig genutzte Events wie Tastenanschläge nicht von seltenen Events beeinträchtigt werden.\newline
+Da es sehr schnell zu vielen Prozessen kommen kann, wird mit den Zuständen \textit{blockiert suspendiert} und \textit{bereit suspendiert} eine Möglichkeit geschaffen, selten genutzte Prozesse aus dem Arbeitsspeicher in den Massenspeicher\footnote{Spezielle Partitionen auf einer Festplatte. Auch \textit{swap} genannt.} zu verschieben. Wie die Namen schon Implizieren Prozesse in den Zuständen \textit{blockiert} und \textit{bereit} jeweils suspendiert und aktiviert werden. Für zusätzliche Geschwindigkeit, können Prozesse selbst im suspendierten Zustand auf Ereignisse reagieren und von \textit{blockiert suspendiert} in \textit{bereit suspendiert} wechseln. Es gibt demnach ein zweites \captionref{Warteschlange Prozesse} für die suspendierten Prozesse. Dieses beinhaltet keinen zugriff auf die CPU, sondern kann die Prozesse maximal aktivieren und in den Arbeitsspeicher verschieben.
+
+\newpage
+
+\subsubsection{Funktionsweise des Schedulers}
+\lipsum
+
+\subsection{Threads}
+\lipsum
+
 \subsection{Implementation in java}
+\lipsum
+
 \subsubsection{ThreadPool}
+\lipsum[3-5]
+
 \subsubsection{Thread sicherheit}
+\lipsum[3-5]
 
 \section{Quellen}
 MapBild :
