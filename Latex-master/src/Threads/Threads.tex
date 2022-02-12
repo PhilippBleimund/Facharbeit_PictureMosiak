@@ -102,20 +102,78 @@ Da es sehr schnell zu vielen Prozessen kommen kann, wird mit den Zuständen \tex
 
 \newpage
 
-\subsubsection{Funktionsweise des Schedulers}
-\lipsum
+\subsection{Funktionsweise des Schedulers}
+Der \textit{Scheduler} ist ein sehr wichtiges und mächtiges Stück Code. Es managed alle anderen Prozesse eines Betriebssystems. Es kann sich die Frage gestellt werden, wie der \textit{Scheduler} ausgeführt wird. Ist er nur ein weiterer Prozess? Dies würde aber implizieren, dass er sich selber Managen würde. Oder wird er auf einem eigenen CPU Kern ausgeführt? Aber Linux läuft doch auch auf einem einzelnem Kern. Die Antwort liegt in der Natur des Kernels.
+\medskip
+\newline
+Der Kernel ist die niedrigste Instanz mit der höchsten Berechtigung in einem System. Nichts steht neben ihm und der CPU. Jedes Programm muss über den Kernel um etwas machen zu können. Der \textit{Scheduler} ist ein Teil des Kernels. Der Kernel ist jedoch kein einzelner Prozess, welcher immer läuft, sondern eine Art Bibliothek. Ein Programm wendet sich an den Kernel und nicht der Kernel an das Programm. Dementsprechend läuft der \textit{Scheduler} nicht dauerhaft, sondern wird nach einer gewissen Zeit getriggert. Der \textit{Scheduler} wird dabei entweder von einem beendeten Process getriggert oder nach einer Zeitunterbrechung. Die Zeitunterbrechung wird dabei von der CPU durch den \textit{programmable interrupt timer (PIT)} erzeugt und im Kernel durch den \textit{timer interrupt handler} aufgefangen, welcher auch den \textit{Scheduler} startet. Es wird dabei zwischen einem \textit{ticked kernel} und \textit{tickless kernel} unterschieden. Bei dem \textit{ticked kernel} ist der Zeitintervall immer gleich wogegen der des \textit{tickless kernels} dynamisch verändert werden kann.
+\bigskip
+\newline
+Der \textit{Scheduler} verwaltet die einzelnen Warteschlangen und entscheidet, wann ein Prozess auf die CPU zugreifen darf. Dabei ist es wichtig die beste Effizienz beizubehalten und trotzdem eine gute Verteilung der Prozesszeit zu ermöglichen. Denn Kontextwechsel sind aufwändig. Bei vielen kleinen Prozessen wird viel Zeit für das speichern der Register und das wiederherstellen eines Prozesses aus der \textit{Prozesstabelle} verwendet. Je länger ein Prozess arbeiten kann, desto effizienter wird die Zeit genutzt. Daher haben sich zwei grundlegende Konzepte des \textit{schedulings} gebildet. Diese Schedulingverfahren sind:
+\begin{itemize}
+    \item \textit{Nicht-präemptives Scheduling}. Bei diesem ist ein Prozess bis zu seiner Fertigstellung über volle Kontrolle über die CPU. Der \textit{Scheduler} führt erst den Kontextwechsel nach dessen Vollendung aus. Dabei kann es zu Situationen kommen, bei denen ein Prozess nicht Vollendet werden kann. Beispielsweise durch eine Endlosschleife in der Programmierung oder der Entwickler setzt bei der Programmierung das \textit{Präemtives Scheduling} voraus.
+    \item \textit{Präemtives Scheduling}. Dieses wird seit Windows 3.x und Mac OS8/9 verwendet. Dabei wird nicht auf die Vollendung eines Prozesses gewartet, sondern kann , und wird in den meisten Fällen, der Prozess der CPU vor Beendung entzogen. Der Vorteil ist, dass viele weitere Prozesse ``gleichzeitig'' arbeiten können, ohne dass der Nutzer das ``Einfrieren'' anderer Prozesse erfährt. Der Nachteil dabei ist, dass die Kontextwechsel viel Zeit in Anspruch nehmen. Somit haben die Prozesse weniger Arbeitszeit und die gesamte Leistung der CPU sinkt etwas. Da die Vorteile der größeren Freiheit der leicht verringerten Leistung überwiegen wird dieses Verfahren in den meisten modernen Betriebssysteme verwendet.
+\end{itemize}
+
+Auf diesen zwei grundlegenden Systemen haben sich weitere \textit{Scheduling} Verfahren entwickelt, welche das Verwalten der Warteschlange implementieren. Um ein Ideales System zu erschaffen, müssen bestimmte Punkte berücksichtigt werden. Diese lassen sich nicht immer miteinander Vereinbaren und es ist dem Entwickler überlassen, welche er bevorzugt. Diese Kriterien währen wie folgt:
+\begin{itemize}
+    \item Prozessor-Auslastung - Die Prozessor-Auslastung sollte im Idealfall so hoch wie möglich sein. Damit kein Befehlszyklus\footnote{Ein Befehlszyklus ist der kleinste Zeitintervall einer CPU. Befehle können unterschiedlich viele Befehlszyklen brauchen. Je kleiner der Befehlszyklus ist desto höher ist die Herz Anzahl einer CPU} verschwendet wird.
+    \item Antwortzeit - Die Zeit, die vergeht, bis die erste Antwort eines Prozesses nach Anfrage ankommt.
+    \item Durchlaufzeit - Die Zeit, die vergeht, bis ein Prozess nach Einreichung beendet ist.
+    \item Durchsatz - Wie viele Prozesse in einem vorgegebenen Intervall, beendet werden. Der Intervall kann je nach Anwendungsfall variieren.
+    \item Wartezeit - Die Zeit, die ein Prozess in der bereit-Warteschlange verbringt, bis er zugriff auf die CPU bekommt.
+    \item Fairness - Die Fairness eines Verfahren bestimmt, wie gut kleine und weniger priorisierte Prozesse eine Chance haben Prozesszeit zu erhalten.
+\end{itemize}
+
+Im Folgenden werde ich zwei \textit{Scheduling} Verfahren vorstellen und diese auf die genannten Kriterien bewerten.
+\newpage
+
+\subsubsection{Completetely Fair Scheduling}
+\textit{Completetely Fair Scheduling}\footnote{\textit{Completetely Fair Scheduling (CFS)} wurde 2007 das erste mal von Ingo Molnar im Linux Kernel eingearbeitet.} ist eine, wie der Name schon impliziert, eine Form des \textit{Ideal Fair Scheduling}. Dieses besagt, dass versucht wird die Prozesse gleich lange Arbeiten zu lassen. In den Tabellen \ref{Fair Scheduling} sind vier Prozesse dargestellt. Alle haben die selbe Priorität. In dem Szenario hat jeder Zeit-Quant($Q_1$, $Q_2$, \dots) eine Zeitspanne von 4ms. In den ersten vier Quanten bekommt jeder Prozess 1ms. Ab $Q_4$ sind Prozess B und D abgeschlossen und A und C erhalten somit in $Q_5$ jeweils 2ms. Durch das Prinzip werden alle Prozesse gleich behandelt.
+\begin{figure}[h]
+    \centering
+    \begin{tabular}{| l | l |}
+        \hline
+        Prozess & Ausführungszeit\\
+        \hline
+        A & 8ms\\
+        \hline
+        B & 4ms\\
+        \hline
+        C & 16ms\\
+        \hline
+        D & 4ms\\
+        \hline
+    \end{tabular}
+    \begin{tabular}{| x{1em} | x{1em} | x{1em} | x{1em} | x{1em} | x{1em} | x{1em} | x{1em} | x{1em} |}
+        \hline
+        \rowcolor{black!10}
+        & $Q_1$ & $Q_2$ & $Q_3$ & $Q_4$ & $Q_5$ & $Q_6$ & $Q_7$ & $Q_8$\\
+        \hline
+        \rowcolor{black!20}
+        A & 1 & 2 & 3 & 4 & 6 & 8 & &\\
+        \hline
+        \rowcolor{black!10}
+        B & 1 & 2 & 3 & 4 & & & &\\
+        \hline
+        \rowcolor{black!20}
+        C & 1 & 2 & 3 & 4 & 6 & 8 & 12 & 16\\
+        \hline
+        \rowcolor{black!10}
+        D & 1 & 2 & 3 & 4 & & & &\\
+        \hline
+    \end{tabular}
+    \captionof{table}{\textit{Fair Scheduling}}
+    \label{Fair Scheduling}
+\end{figure}
 
 \subsection{Threads}
-\lipsum
 
 \subsection{Implementation in java}
-\lipsum
 
 \subsubsection{ThreadPool}
-\lipsum[3-5]
 
 \subsubsection{Thread sicherheit}
-\lipsum[3-5]
 
 \section{Quellen}
 MapBild :
