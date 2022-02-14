@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{BetriebssystemeKompakt}
 {\sc Braun, C.}: {\em Betriebssysteme kompakt\/}.
@@ -31,6 +31,17 @@
 \bibitem{CFS:Rebeiro}
 {\sc Rebeiro, P.~C.}: {\em Lecture 22 Completely Fair Scheduling\/}.
 \newblock \url{https://www.youtube.com/watch?v=scfDOof9pww}, 2017.
+
+\bibitem{LinuxDoc:Torvalds}
+{\sc Torvalds, L.}: {\em Linux Documentation\/}.
+\newblock
+  \url{https://github.com/torvalds/linux/tree/master/Documentation/scheduler},
+  2022.
+
+\bibitem{LinuxKernel:Torvalds}
+{\sc Torvalds, L.}: {\em Linux Kernel\/}.
+\newblock \url{https://github.com/torvalds/linux/tree/master/kernel/sched},
+  2022.
 
 \bibitem{Scheduling:Williams}
 {\sc Williams, L.}: {\em CPU Scheduling Algorithms in Operating Systems\/}.
