@@ -1,0 +1,41 @@
+\begin{thebibliography}{1}
+
+\bibitem{BetriebssystemeKompakt}
+{\sc Braun, C.}: {\em Betriebssysteme kompakt\/}.
+\newblock Springer Berlin Heidelberg, 2020.
+
+\bibitem{Scheduler:Chidambaram}
+{\sc Chidambaram, P.~V.}: {\em Linux Kernel Scheduler\/}.
+\newblock \url{https://www.youtube.com/watch?v=Jl_0W4o0xao}, 2020.
+
+\bibitem{Scheduler:James}
+{\sc James, S.}: {\em Understanding Linux Scheduling\/}.
+\newblock
+  \url{https://www.linkedin.com/pulse/20140629145049-21586023-understanding-linux-scheduling},
+  2014.
+
+\bibitem{Scheduler:Kerrisk}
+{\sc Kerrisk, M.}: {\em sched - overview of CPU scheduling\/}.
+\newblock \url{https://man7.org/linux/man-pages/man7/sched.7.html}, 2021.
+
+\bibitem{tickles:Love}
+{\sc Love, R.}: {\em What is a tickless kernel?\/}.
+\newblock \url{https://www.quora.com/What-is-a-tickless-kernel}, 2013.
+
+\bibitem{Prozesse:Mandl}
+{\sc Mandl, P. D.~P.}: {\em Prozesse und Threads\/}.
+\newblock
+  \url{https://www.wirtschaftsinformatik-muenchen.de/wp-content/uploads/Peter%20Mandl/Lehrveranstaltungen/SoSe%2015/Wirtschaftsinformatik/05_Prozesse_und_Threads.pdf},
+  2015.
+
+\bibitem{CFS:Rebeiro}
+{\sc Rebeiro, P.~C.}: {\em Lecture 22 Completely Fair Scheduling\/}.
+\newblock \url{https://www.youtube.com/watch?v=scfDOof9pww}, 2017.
+
+\bibitem{Scheduling:Williams}
+{\sc Williams, L.}: {\em CPU Scheduling Algorithms in Operating Systems\/}.
+\newblock
+  \url{https://www.guru99.com/cpu-scheduling-algorithms.html#:~:text=Six%20types%20of%20process%20scheduling%20algorithms%20are%3A%20First%20Come%20First,%2C%206)%20Multilevel%20Queue%20Scheduling.},
+  2022.
+
+\end{thebibliography}

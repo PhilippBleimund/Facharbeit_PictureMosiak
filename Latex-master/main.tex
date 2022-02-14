@@ -1,4 +1,5 @@
 %draft
+\nocite{*}
 \documentclass[12pt,a4paper]{article}
 \usepackage[left=2.5cm, right=4.5cm, top=2.5cm, bottom=2cm]{geometry}
 \usepackage[onehalfspacing]{setspace}
@@ -8,9 +9,12 @@
 \setlength\parindent{0pt}
 
 \input{src/packages.tex}
-\numberwithin{equation}{section}
 
 \begin{document}
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+\counterwithin{lstlisting}{section}
+\numberwithin{equation}{section}
 
 \input{src/Titelseite.tex}
 \setcounter{page}{2}
@@ -35,4 +39,8 @@
 %Die Laufzeitanalyse
 \input{src/Laufzeitanalyse/Laufzeit.tex}
 
+\newpage
+%Literaturverzeichnis
+\bibliographystyle{gerabbrv}
+\bibliography{src/literatur}
 \end{document}

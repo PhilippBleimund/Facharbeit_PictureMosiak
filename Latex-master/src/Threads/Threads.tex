@@ -163,10 +163,50 @@ Im Folgenden werde ich zwei \textit{Scheduling} Verfahren vorstellen und diese a
         D & 1 & 2 & 3 & 4 & & & &\\
         \hline
     \end{tabular}
-    \captionof{table}{\textit{Fair Scheduling}}
+    \captionof{table}{\textit{Fair Scheduling (FS)}}
     \label{Fair Scheduling}
 \end{figure}
 
+Im CFS wird das Prinzip des FS nicht hauptsächlich mit Zeitscheiben gelöst. Es wird das Konzept der \textit{vruntime} eingebracht. \textit{Vruntime} bedeutet dabei, wie lange ein Prozessor bereits ausgeführt wurde. CFS berechnet weiterhin unterschiedliche Zeitscheiben für die PIT, jedoch werden diese zur Maximierung der Effizienz genutzt. Prozesse mit komplexen Rechnungen sind effizienter, wenn sie mehr Zeit ohne Kontextwechsel haben. Andere Prozesse wie Tracker schadet der Kontextwechsel nicht allzu sehr. Der \textit{Scheduler} addiert auf die alte \textit{vruntime} die Zeit($\Delta t$) die der Processor lief. Sollte der Prozess noch nicht abgeschlossen sein, wird die neue \textit{vruntime} in einen Rot-Schwarz Baum eingefügt. Ein Rot-Schwarz Baum ist ein Binärbaum, welcher eine selbst ausgleichende Natur besitzt. Somit beträgt die einfüge Laufzeit $\mathcal{O}(\log n)$. CFS wählt als nächsten Prozess, den mit der geringsten \textit{vruntime} aus. Dabei wird immer ein Pointer auf das kleinste Blatt gehalten, um eine Laufzeit von $\mathcal{O}(1)$ zu erhalten, um den Process mit der kleinsten \textit{vruntime} zu finden. Durch das wählen der kleinsten \textit{vruntime} wird das Prinzip des \textit{Fair Schedulings} eingehalten.
+\medskip
+\newpage
+Das Nutzen der \textit{vruntime} als zentralen Wert hat weitere Vorteile. So können die Prioritäten ohne Umwege eingearbeitet werden. Der CFS verwaltet in der \textit{vruntime} drei unterschiedliche \textit{Scheduling Policies}.
+\begin{itemize}
+    \item \textbf{SCHED\_NORMAL/SCHED\_OTHER}. Die normale Regel für Prozesse.
+    \item \textbf{SCHED\_BATCH}. Für Prozesse, die nicht interaktiv sind und den Arbeitsbereich des Nutzers nicht stören wollen.
+    \item \textbf{SCHED\_IDLE}. Die niedrigste Regel für Prozesse und sie werden an wenigsten bevorzugt.
+\end{itemize}
+SCHED\_NORMAL und SCHED\_BATCH sind zusätzlich von den \textit{nice} Werten abhängig. Die \textit{nice} Werte reichen von -20 bis 19 und repräsentieren die Priorität eines Prozesses. Je kleiner der \textit{nice} Wert, desto höher ist die Priorität. Dabei ist der unterschied Linear. Die Verteilung des Prozessors auf zwei Prozesse mit jeweils 11 und 12, währe 55\% und 45\%. Bei Prozessen mit -4 und -5 ist auch 55\% und 45\%. Die neue \textit{vruntime} wird mit Formel \ref{calc_vruntime}\cite{Linux:Torvalds} berechnet.
+\begin{align}
+    \text{vruntime} \mathrel{+}= \text{delta\_exec} \cdot \frac{\text{weigth}}{\text{lw.weight}}
+    \label{calc_vruntime}
+\end{align}
+Dabei ist \textit{weigth} mit 1024 oder \textit{nice\_0} definiert. \textit{lw.weigth} ist die Priorität als \textit{weigth}. Dieses kann aus dem Array in dem Listing \ref{core.c}\cite{Linux:Torvalds} entnommen werden.
+\begin{figure}[h]
+    \centering      
+    \lstset{
+    language=C,
+    keywordstyle=\color{blue},
+    commentstyle=\color{green},
+    }
+    \begin{tabular}{c}
+        \begin{lstlisting}{Latexkernel core.c}
+10886 const int sched_prio_to_weight[40] = {
+10887 /* -20 */ 88761, 71755, 56483, 46273, 36291,
+10888 /* -15 */ 29154, 23254, 18705, 14949, 11916,
+10889 /* -10 */ 9548,  7620,  6100,  4904,  3906,
+10890 /*  -5 */ 3121,  2501,  1991,  1586,  1277,
+10891 /*   0 */ 1024,  820,   655,   526,   423,
+10892 /*   5 */ 335,   272,   215,   172,   137,
+10893 /*  10 */ 110,   87,    70,    56,    45,
+10894 /*  15 */ 36,    29,    23,    18,    15,
+10895 };
+        \end{lstlisting}
+    \end{tabular}
+    \captionof{lstlisting}{Latexkernel core.c{\footnotesize (v5.17-rc3)} \textit{nice} Werte als \textit{weigth}}
+    \label{core.c}
+\end{figure}
+\newpage
 \subsection{Threads}
 
 \subsection{Implementation in java}
