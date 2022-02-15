@@ -8,6 +8,12 @@
 {\sc Chidambaram, P.~V.}: {\em Linux Kernel Scheduler\/}.
 \newblock \url{https://www.youtube.com/watch?v=Jl_0W4o0xao}, 2020.
 
+\bibitem{Threads:Dusey}
+{\sc Dusey, A.}: {\em Threads and its types in Operating System\/}.
+\newblock
+  \url{https://www.geeksforgeeks.org/threads-and-its-types-in-operating-system/},
+  2021.
+
 \bibitem{Scheduler:James}
 {\sc James, S.}: {\em Understanding Linux Scheduling\/}.
 \newblock

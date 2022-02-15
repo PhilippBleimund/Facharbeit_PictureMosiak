@@ -125,9 +125,8 @@ Auf diesen zwei grundlegenden Systemen haben sich weitere \textit{Scheduling} Ve
     \item Fairness - Die Fairness eines Verfahren bestimmt, wie gut kleine und weniger priorisierte Prozesse eine Chance haben Prozesszeit zu erhalten.
 \end{itemize}
 
-Im Folgenden werde ich zwei \textit{Scheduling} Verfahren vorstellen und diese auf die genannten Kriterien bewerten.
+Im Folgenden werde ich zwei \textit{Scheduling} Verfahren vorstellen.
 \newpage
-
 \subsubsection{Completetely Fair Scheduling}
 \textit{Completetely Fair Scheduling}\footnote{\textit{Completetely Fair Scheduling (CFS)} wurde 2007 das erste mal von Ingo Molnar im Linux Kernel eingearbeitet.} ist eine, wie der Name schon impliziert, eine Form des \textit{Ideal Fair Scheduling}. Dieses besagt, dass versucht wird die Prozesse gleich lange Arbeiten zu lassen. In den Tabellen \ref{Fair Scheduling} sind vier Prozesse dargestellt. Alle haben die selbe Priorität. In dem Szenario hat jeder Zeit-Quant($Q_1$, $Q_2$, \dots) eine Zeitspanne von 4ms. In den ersten vier Quanten bekommt jeder Prozess 1ms. Ab $Q_4$ sind Prozess B und D abgeschlossen und A und C erhalten somit in $Q_5$ jeweils 2ms. Durch das Prinzip werden alle Prozesse gleich behandelt. \cite{CFS:Rebeiro}
 \begin{figure}[h]
@@ -207,13 +206,78 @@ Dabei ist \textit{weigth} mit 1024 oder \textit{nice\_0} definiert. \textit{lw.w
     \label{core.c}
 \end{figure}
 \newpage
+
+\subsubsection{Round Robin}
+Das Round Robin(RR) Verfahren ist weitverbreitet. Es wird in abgewandelter Form auch heutzutage in Windows verwendet. Das RR \textit{Scheduling} nutzt Zeitquanten. Diese Befinden sich meistens im ein- oder zweistelligen Millisekundenbereich. Jeder Prozess wird nacheinander für die Länge des Zeitquanten ausgeführt und danach dem Prozessor einzogen. Ist der Prozess früher beendet, wird ein neuer Zeitquant eingeleitet. Ist der Prozess nicht beendet, wird er wieder in die Warteschlange am Ende angehängt.
+\begin{figure}
+    \begin{tabular}{| l | l |}
+        \hline
+        Prozess & Ausführungszeit\\
+        \hline
+        A & 30ms\\
+        \hline
+        B & 50ms\\
+        \hline
+        C & 20ms\\
+        \hline
+        D & 30ms\\
+        \hline
+    \end{tabular}
+    \begin{tabular}{| x{0.5em} | x{0.5em} | x{0.5em} | x{0.5em} | x{0.5em} | x{0.5em} | x{0.5em} | x{0.5em} | x{0.5em} | x{0.5em} | x{0.5em} | x{0.5em} | x{0.5em} |}
+        \hline
+        \cellcolor{red!20}A & \cellcolor{red!20} & \cellcolor{blue!20}B & \cellcolor{blue!20} & \cellcolor{green!20}C & \cellcolor{green!20} & \cellcolor{black!20}D & \cellcolor{black!20} & \cellcolor{red!20}A & \cellcolor{blue!20}B & \cellcolor{blue!20} & \cellcolor{black!20}D & \cellcolor{blue!20}B\\
+        \hline
+    \end{tabular}
+\end{figure}
+
 \subsection{Threads}
 In Modernen Computer Systemen gibt es noch Threads neben Prozessen. Threads sind dabei deutlich häufiger vertreten als Prozesse. Auf meinem Computer laufen durchschnittlich 20x mehr Threads als Prozesse. Dies liegt daran, dass Threads als Prozess eines Prozesses gesehen werden. Ein Programm ist nur ein Prozess kann aber aber viele eigene Threads besitzen. Die Funktionalität von Threads unterscheidet sich nicht viel von Prozessen. Sie werden im \textit{Scheduler} gleich behandelt und es gibt nur geringe Unterschiede bei dem Kontextwechsel.
 \medskip
 \newline
-Threads 
-\subsection{Implementation in java}
+Threads haben jedoch ein paar Besonderheiten gegenüber Prozessen. Denn im Gegensatz zu Prozessen, welche unabhängig voneinander Laufen, haben Threads diese Beschränkung nicht. Dies liegt daran, dass Threads auf den Stack des Prozessors zugreifen können. Threads teilen sich somit die globalen Variablen des Prozesses, speichern aber eigene lokale Variablen im eigenen Stack. Wegen diesem Prinzip können mehrere Threads mit dem selben Code arbeiten, ohne sich gegenseitig zu behindern.
+\begin{figure}[h]
+    \centering
+    \input{images/Threads/ThreadinProzess.tex}
+    \caption{Threads}
+\end{figure}
+Threads werden als teil eines Prozesses betrachtet. Deswegen sind sie viel Leichtgewichtiger und können schneller erstellt und beendet werden. Zusätzlich werden Threads in zwei Kategorien unterteilt.
+\begin{itemize}
+    \item Nutzer Level Threads. Diese werden mithilfe einer Thread-library implementiert und sind unabhängig von dem Betriebssystem. Folgend können Nutzer Level Threads auch auf einem System ohne unterstütztem Multiprozessing in Betrieb genommen werden. Außerdem ist das Management von vielen Threads schneller, da keine Systemaufrufe getätigt werden müssen.
+    \item Kernel Level Threads. Diese werden vom Betriebssystem implementiert und auch von diesem verwaltet. Dadurch ergeben sich Vorteile, wie auch Nachteile. Ein Vorteil wäre, dass Prozesse mit einer hohen Thread Anzahl bevorzugt werden könnten. Der Nachteil ist, dass die Verwaltung auf Kernel Ebene deutlich Intensiver ist. Auch muss für jeden Thread ein einzelner Kontrollblock erstellt werden. \cite{Threads:Dusey}
+\end{itemize}
+\subsection{Threads in Java}
+In Java sind die Threads auf dem Kernel Level implementiert. In Versionen vor 1.2(1998) gab es die so genannten grünen Threads. Diese waren Nutzer Level Threads von der Java VM. Der Vorteil durch das Modernere Modell, ist dass die gesamte CPU genutzt werden kann. Ein Prozess mit mehreren Threads kann somit alle vorhandenen CPU Kerne benutzen. Im alten Modell wurde dies über Umwege gelöst. So wurden ein paar Kernel Level Threads erstellt, welche dann die grünen Threads zugewiesen bekamen.
+\subsubsection{Implementation in Java}
+Threads werden in java mithilfe der \textit{java.lang.Thread} Klasse verwirklicht. Es wird dabei zwischen zwei unterschiedlichen Implementierungen unterschieden.\\
+\bigskip
+\textbf{extends Thread:} Bei dieser Methode wird eine Klasse erstellt, welche die Thread Klasse erweitert. Der Vorteil dieses Vorgehens ist, dass alle Einstellungen innerhalb der neuen Klasse getätigt werden können.
+\lstset{
+language=Java,
+keywordstyle=\color{blue},
+commentstyle=\color{green},
+basicstyle=\linespread{0.8}\small,
+}
+\begin{lstlisting}{extends Thread}
+public class SimpleThread extends Thread {
 
+    public SimpleThread(){
+        super();
+        //settings
+        setPriority(Thread.NORM_PRIORITY);
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Im Running");
+    }
+
+    public static void main(String[] args){
+        SimpleThread t = new SimpleThread();
+        t.start();
+    }
+}
+\end{lstlisting}
+Das Vorgehen hat seine Probleme. Denn es wird nicht die \textit{run()} Methode von Thread überschrieben, sondern die von Runnable, welches von Thread implementiert wird.
 \subsubsection{ThreadPool}
 
 \subsubsection{Thread sicherheit}
