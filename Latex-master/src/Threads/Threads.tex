@@ -1,6 +1,4 @@
 \section{Threads und Prozesse}
-
-\subsection{Einleitung}
 Prozesse sind die Ausführung eines Programms auf dem Prozessor. Jedoch kann ein Prozessor maximal ein Prozess gleichzeitig ausführen. Um Verwirrung zu beseitigen möchte ich darauf hinweisen, dass selbst moderne Prozessoren nicht in der Lage sind mehrere Prozesse auszuführen. Diese ``Illusion'' wird erzeugt, da ein Prozessor(Bauteil) mehre Kerne hat. Diese Kerne sind die eigentlichen Prozessoren. In Zukunft werde ich den Begriff Kerne nutzen um die Unterscheidung zu erleichtern. Um trotzdem mehrere Prozesse gleichzeitig zu bearbeiten, werden den einzelnen Kernen die Prozesse für nur wenige Millisekunden zugeordnet. Diese nennt man auch Virtuelle Threads. Jeder Virtuelle Thread kann einem realem Kern zugeordnet werden. Jedoch wird nicht jeder Process gleich lange einem Kern zugeordnet. Die Prozesse konkurrieren um ihre Zeit. Denn schließlich soll mein Computerspiel nicht die gleiche Zeit bekommen, wie meine Stoppuhr app. Diese wechsel zwischen den einzelnen Prozessen nennt man auch Kontextwechsel. Der Kontext des Kerns ändert sich demnach.
 
 \begin{figure}[h]
@@ -208,27 +206,39 @@ Dabei ist \textit{weigth} mit 1024 oder \textit{nice\_0} definiert. \textit{lw.w
 \newpage
 
 \subsubsection{Round Robin}
-Das Round Robin(RR) Verfahren ist weitverbreitet. Es wird in abgewandelter Form auch heutzutage in Windows verwendet. Das RR \textit{Scheduling} nutzt Zeitquanten. Diese Befinden sich meistens im ein- oder zweistelligen Millisekundenbereich. Jeder Prozess wird nacheinander für die Länge des Zeitquanten ausgeführt und danach dem Prozessor einzogen. Ist der Prozess früher beendet, wird ein neuer Zeitquant eingeleitet. Ist der Prozess nicht beendet, wird er wieder in die Warteschlange am Ende angehängt.
-\begin{figure}
+Das Round Robin(RR) Verfahren ist weitverbreitet. Es wird in abgewandelter Form auch heutzutage in Windows verwendet.\cite{Windows:Lohmann} Das RR \textit{Scheduling} nutzt Zeitquanten. Diese Befinden sich meistens im ein- oder zweistelligen Millisekundenbereich. Jeder Prozess wird nacheinander für die Länge des Zeitquanten ausgeführt und danach dem Prozessor einzogen. Ist der Prozess früher beendet, wird ein neuer Zeitquant eingeleitet. Ist der Prozess nicht beendet, wird er wieder in die Warteschlange am Ende angehängt.\\
+\begin{figure}[h]
+    \centering
     \begin{tabular}{| l | l |}
         \hline
         Prozess & Ausführungszeit\\
         \hline
-        A & 30ms\\
+        \cellcolor{red!20}A & 30ms\\
         \hline
-        B & 50ms\\
+        \cellcolor{blue!20}B & 50ms\\
         \hline
-        C & 20ms\\
+        \cellcolor{green!20}C & 20ms\\
         \hline
-        D & 30ms\\
-        \hline
-    \end{tabular}
-    \begin{tabular}{| x{0.5em} | x{0.5em} | x{0.5em} | x{0.5em} | x{0.5em} | x{0.5em} | x{0.5em} | x{0.5em} | x{0.5em} | x{0.5em} | x{0.5em} | x{0.5em} | x{0.5em} |}
-        \hline
-        \cellcolor{red!20}A & \cellcolor{red!20} & \cellcolor{blue!20}B & \cellcolor{blue!20} & \cellcolor{green!20}C & \cellcolor{green!20} & \cellcolor{black!20}D & \cellcolor{black!20} & \cellcolor{red!20}A & \cellcolor{blue!20}B & \cellcolor{blue!20} & \cellcolor{black!20}D & \cellcolor{blue!20}B\\
+        \cellcolor{black!20}D & 30ms\\
         \hline
     \end{tabular}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+        \hline
+        \cellcolor{red!20} & \cellcolor{red!20} & \cellcolor{blue!20} & \cellcolor{blue!20} & \cellcolor{green!20} & \cellcolor{green!20} & \cellcolor{black!20} & \cellcolor{black!20} & \cellcolor{red!20} & \cellcolor{blue!20} & \cellcolor{blue!20} & \cellcolor{black!20} & \cellcolor{blue!20}\\
+        \hline
+        \multicolumn{1}{l}{} & \multicolumn{2}{c}{\tiny 20} & \multicolumn{2}{c}{\tiny 40} & \multicolumn{2}{c}{\tiny 60} & \multicolumn{2}{c}{\tiny 80} & \multicolumn{2}{c}{\tiny 100} & \multicolumn{2}{c}{\tiny 120}\\
+    \end{tabular}
+    \caption{Round Robin Beispiel}
+    \label{RoundRobin}
 \end{figure}
+
+In \ref{RoundRobin} werden vier Prozesse in der vorgegebenen Reihenfolge abgearbeitet. Die Zeitquanten in dem Beispiel sind 20ms lang. Prozess C benötigt nur ein Zeitquanten und wird beendet. Prozesse A und D benötigen 1.5 Zeitquanten. Sie arbeiten beim Zweiten mal nur 10ms und der nächste Prozess kann nachrücken. Prozess B benötigt am meisten Zeit und wird drei mal ausgeführt. Erst beim dritten mal kann er beendet werden.
+\medskip
+\newline
+Das Round Robin Verfahren kann noch mit Prioritäten erweitert werden. Dieses werde ich am Beispiel des \textit{Schedulers} von Windows erklären. Windows verwendet ein Prioritätengesteuertes \textit{Scheduling}\footnote{Die Prioritäten von Windows reichen dabei von 0 bis 31}. Das Round Robin Verfahren wird dabei immer auf die selbe Priorität angewendet. Die höhere Priorität wird immer bevorzugt. Dazu wird für jede Priorität eine eigene Warteschlange angelegt. Um das verhungern eines Prozesses zu verhindern, nutzt Windows noch Variable Prioritäten. Bei den Variablen Prioritäten hat Windows noch die Möglichkeit selber zu ermitteln welche Prozesse wichtiger sind.
+\medskip
+\newline
+Mit dem Round Robin Verfahren kann grundsätzlich eine Faire Umgebung geschaffen werden. Werden jedoch Prioritäten ohne Variation bevorzugt, kann es zu einem Unfairen System werden. Auch sind I\/O-lastige\footnote{I\/O = Input\/Output. Ein Prozess wartet z.B. auf eine Eingabe des Benutzers.} Prozesse benachteiligt. Sie benötigen selber nur wenig Ausführungszeit, müssen aber für das reibungslose Funktionieren häufiger Zugriff auf den Prozessor erhalten. Im Round Robin \textit{Scheduling} müssen sie warten bis Rechenintensive Prozesse den Zeitquanten vollständig verbrauchen, bevor sie wieder an der Reihe sind.
 
 \subsection{Threads}
 In Modernen Computer Systemen gibt es noch Threads neben Prozessen. Threads sind dabei deutlich häufiger vertreten als Prozesse. Auf meinem Computer laufen durchschnittlich 20x mehr Threads als Prozesse. Dies liegt daran, dass Threads als Prozess eines Prozesses gesehen werden. Ein Programm ist nur ein Prozess kann aber aber viele eigene Threads besitzen. Die Funktionalität von Threads unterscheidet sich nicht viel von Prozessen. Sie werden im \textit{Scheduler} gleich behandelt und es gibt nur geringe Unterschiede bei dem Kontextwechsel.
@@ -282,7 +292,6 @@ Das Vorgehen hat seine Probleme. Denn es wird nicht die \textit{run()} Methode v
 
 \subsubsection{Thread sicherheit}
 
-\section{Quellen}
 MapBild :
 SynchronousJFXFileChooser : https://stackoverflow.com/questions/28920758/javafx-filechooser-in-swing
 Answer from Sergei Tachenov

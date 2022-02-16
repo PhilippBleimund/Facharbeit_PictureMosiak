@@ -24,6 +24,12 @@
 {\sc Kerrisk, M.}: {\em sched - overview of CPU scheduling\/}.
 \newblock \url{https://man7.org/linux/man-pages/man7/sched.7.html}, 2021.
 
+\bibitem{Windows:Lohmann}
+{\sc Lohmann, D.}: {\em Der Scheduler von Windows\/}.
+\newblock
+  \url{https://www4.cs.fau.de/Lehre/WS06/V_BS/folien/09-Sched-Windows-2x2.pdf},
+  2006.
+
 \bibitem{tickles:Love}
 {\sc Love, R.}: {\em What is a tickless kernel?\/}.
 \newblock \url{https://www.quora.com/What-is-a-tickless-kernel}, 2013.
