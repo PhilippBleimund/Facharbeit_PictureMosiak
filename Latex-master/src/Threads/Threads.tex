@@ -76,21 +76,22 @@ Mithilfe der Prozesstabelle kann das Betriebssystem die einzelnen Prozesse speic
 
 \subsection{Verwalten der Prozesse}
 
-Jedes Betriebssystem muss einen weg haben, um effektiv die Kontextwechsel der Prozesse durchführen zu können. Dazu wird in den meisten Fällen ein \captionref{Warteschlange Prozesse} verwendet. Auch hat ein Prozess deutlich mehr Zustände als nur \textit{untätig} und \textit{rechnend} in einem modernen Betriebssystem. Dazu wird heutzutage meistens das \captionref{Prozessmodell} oder eine modifizierte Variante. Linux als Beispiel verwendet ein \textit{8-Zustands Prozessmodell}, welches das Modell mit einem \textit{kernel rechnend} Zustand erweitert.
+Jedes Betriebssystem muss einen weg haben, um effektiv die Kontextwechsel der Prozesse durchführen zu können. Dazu wird in den meisten Fällen ein \textit{Warteschlange Prozesse}\ref{Warteschlange Prozesse} verwendet. Auch hat ein Prozess deutlich mehr Zustände als nur \textit{untätig} und \textit{rechnend} in einem modernen Betriebssystem. Dazu wird heutzutage meistens das \textit{Prozessmodell}\ref{Prozessmodell} oder eine modifizierte Variante. Linux als Beispiel verwendet ein \textit{8-Zustands Prozessmodell}, welches das Modell mit einem \textit{kernel rechnend} Zustand erweitert.
 
 \begin{figure}[h]
     \centering
     \input{images/Threads/Warteschlange.tex}
-    \caption{Warteschlangen System}
+    \caption{Warteschlangen System\protect\footnotemark}
     \label{Warteschlange Prozesse}
 \end{figure}
-
+\footnotetext{Grafik in Anlehnung an \cite{BetriebssystemeKompakt}}
 \begin{figure}[h]
     \centering
     \input{images/Threads/Prozessmodell.tex}
-    \caption{7-Zustands Prozessmodell}
+    \caption{7-Zustands Prozessmodell\protect\footnote{eine fußnote}}
     \label{Prozessmodell}
 \end{figure}
+\footnotetext{Grafik in Anlehnung an \cite{BetriebssystemeKompakt}}
 
 \newpage
 
