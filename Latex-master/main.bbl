@@ -24,6 +24,12 @@
 {\sc Kerrisk, M.}: {\em sched - overview of CPU scheduling\/}.
 \newblock \url{https://man7.org/linux/man-pages/man7/sched.7.html}, 2021.
 
+\bibitem{Threads:Lippert}
+{\sc Lippert, E.}: {\em What is this thing you call thread safe?\/}.
+\newblock
+  \url{https://docs.microsoft.com/en-us/archive/blogs/ericlippert/what-is-this-thing-you-call-thread-safe},
+  2009.
+
 \bibitem{Windows:Lohmann}
 {\sc Lohmann, D.}: {\em Der Scheduler von Windows\/}.
 \newblock
@@ -39,6 +45,28 @@
 \newblock
   \url{https://www.wirtschaftsinformatik-muenchen.de/wp-content/uploads/Peter%20Mandl/Lehrveranstaltungen/SoSe%2015/Wirtschaftsinformatik/05_Prozesse_und_Threads.pdf},
   2015.
+
+\bibitem{Java:Thread}
+{\sc Oracle}: {\em Class Thread\/}.
+\newblock
+  \url{https://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html}.
+
+\bibitem{Java:Runnable}
+{\sc Oracle}: {\em Interface Runnable\/}.
+\newblock
+  \url{https://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.html}.
+
+\bibitem{SynchronizedMethods:Oracle}
+{\sc Oracle}: {\em Synchronized Methods\/}.
+\newblock
+  \url{https://docs.oracle.com/javase/tutorial/essential/concurrency/syncmeth.html},
+  2014.
+
+\bibitem{ThreadInterference:Oracle}
+{\sc Oracle}: {\em Thread Interference\/}.
+\newblock
+  \url{https://docs.oracle.com/javase/tutorial/essential/concurrency/interfere.html},
+  2014.
 
 \bibitem{CFS:Rebeiro}
 {\sc Rebeiro, P.~C.}: {\em Lecture 22 Completely Fair Scheduling\/}.

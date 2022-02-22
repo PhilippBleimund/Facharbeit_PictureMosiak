@@ -241,11 +241,11 @@ Das Round Robin Verfahren kann noch mit Prioritäten erweitert werden. Dieses we
 \newline
 Mit dem Round Robin Verfahren kann grundsätzlich eine Faire Umgebung geschaffen werden. Werden jedoch Prioritäten ohne Variation bevorzugt, kann es zu einem Unfairen System werden. Auch sind I\/O-lastige\footnote{I\/O = Input\/Output. Ein Prozess wartet z.B. auf eine Eingabe des Benutzers.} Prozesse benachteiligt. Sie benötigen selber nur wenig Ausführungszeit, müssen aber für das reibungslose Funktionieren häufiger Zugriff auf den Prozessor erhalten. Im Round Robin \textit{Scheduling} müssen sie warten bis Rechenintensive Prozesse den Zeitquanten vollständig verbrauchen, bevor sie wieder an der Reihe sind.
 
-\subsection{Threads}
+\subsection{Threads}\label{Threads}
 In Modernen Computer Systemen gibt es noch Threads neben Prozessen. Threads sind dabei deutlich häufiger vertreten als Prozesse. Auf meinem Computer laufen durchschnittlich 20x mehr Threads als Prozesse. Dies liegt daran, dass Threads als Prozess eines Prozesses gesehen werden. Ein Programm ist nur ein Prozess kann aber aber viele eigene Threads besitzen. Die Funktionalität von Threads unterscheidet sich nicht viel von Prozessen. Sie werden im \textit{Scheduler} gleich behandelt und es gibt nur geringe Unterschiede bei dem Kontextwechsel.
 \medskip
 \newline
-Threads haben jedoch ein paar Besonderheiten gegenüber Prozessen. Denn im Gegensatz zu Prozessen, welche unabhängig voneinander Laufen, haben Threads diese Beschränkung nicht. Dies liegt daran, dass Threads auf den Stack des Prozessors zugreifen können. Threads teilen sich somit die globalen Variablen des Prozesses, speichern aber eigene lokale Variablen im eigenen Stack. Wegen diesem Prinzip können mehrere Threads mit dem selben Code arbeiten, ohne sich gegenseitig zu behindern.
+Threads haben jedoch ein paar Besonderheiten gegenüber Prozessen. Denn im Gegensatz zu Prozessen, welche unabhängig voneinander Laufen, haben Threads diese Beschränkung nicht. Dies liegt daran, dass Threads auf den Stack des Prozesses zugreifen können. Threads teilen sich somit die globalen Variablen des Prozesses, speichern aber eigene lokale Variablen im eigenen Stack. Wegen diesem Prinzip können mehrere Threads mit dem selben Code arbeiten, ohne sich gegenseitig zu behindern.
 \begin{figure}[h]
     \centering
     \input{images/Threads/ThreadinProzess.tex}
@@ -260,14 +260,16 @@ Threads werden als teil eines Prozesses betrachtet. Deswegen sind sie viel Leich
 In Java sind die Threads auf dem Kernel Level implementiert. In Versionen vor 1.2(1998) gab es die so genannten grünen Threads. Diese waren Nutzer Level Threads von der Java VM. Der Vorteil durch das Modernere Modell, ist dass die gesamte CPU genutzt werden kann. Ein Prozess mit mehreren Threads kann somit alle vorhandenen CPU Kerne benutzen. Im alten Modell wurde dies über Umwege gelöst. So wurden ein paar Kernel Level Threads erstellt, welche dann die grünen Threads zugewiesen bekamen.
 \subsubsection{Implementation in Java}
 Threads werden in java mithilfe der \textit{java.lang.Thread} Klasse verwirklicht. Es wird dabei zwischen zwei unterschiedlichen Implementierungen unterschieden.\\
-\bigskip
-\textbf{extends Thread:} Bei dieser Methode wird eine Klasse erstellt, welche die Thread Klasse erweitert. Der Vorteil dieses Vorgehens ist, dass alle Einstellungen innerhalb der neuen Klasse getätigt werden können.
+\smallskip
+\newline
+\textbf{extends Thread:} Bei dieser Methode wird eine Klasse erstellt, welche die Thread Klasse erweitert. Der Vorteil dieses Vorgehens ist, dass alle Einstellungen innerhalb der neuen Klasse getätigt werden können.\cite{Java:Thread}
 \lstset{
 language=Java,
 keywordstyle=\color{blue},
 commentstyle=\color{green},
 basicstyle=\linespread{0.8}\small,
 }
+\begin{figure}[h]
 \begin{lstlisting}{extends Thread}
 public class SimpleThread extends Thread {
 
@@ -278,7 +280,7 @@ public class SimpleThread extends Thread {
     }
 
     @Override
-    public void run() {
+    public void run(){
         System.out.println("Im Running");
     }
 
@@ -288,10 +290,69 @@ public class SimpleThread extends Thread {
     }
 }
 \end{lstlisting}
-Das Vorgehen hat seine Probleme. Denn es wird nicht die \textit{run()} Methode von Thread überschrieben, sondern die von Runnable, welches von Thread implementiert wird.
-\subsubsection{ThreadPool}
+\captionof{lstlisting}{mit Thread erweitern}
+\end{figure}
+\\Das Vorgehen hat seine Probleme. Denn es wird nicht die \textit{run()} Methode von Thread überschrieben, sondern die von Runnable, welches von Thread implementiert wird. Wenn die Thread Klasse erweitert wird, kann man keine weiteren Klassen erweitern. Um ein solches Problem zu lösen kann auf die zweite Möglichkeit zurückgegriffen werden.
+\smallskip
+\newline
+\textbf{implements Runnable:}Bei dieser Methode wird nicht ein selbständiger Thread erschaffen. Das Interface Runnable hat nur eine Methode. Die \textit{run()} Methode.\cite{Java:Runnable} Um einen Thread zu starten, muss ein Thread Object erschaffen werden, welche im Konstruktor ein Object des interfaces Runnable erwartet.
+\begin{figure}[h]
+\begin{lstlisting}
+public class SimpleRunnable implements Runnable{
+    public SimpleRunnable(){
+
+    }
+
+    @Override
+    public void run(){
+        System.out.println("Im Running");
+    }
+
+    public static void main(String[] args){
+        SimpleRunnable r = new SimpleRunnable();
+        Thread t = new Thread(r);
+        t.start();
+    }
+}
+\end{lstlisting}
+\captionof{lstlisting}{Runnable implementieren}
+\end{figure}
+\\Der Vorteil dieses Vorgehen ist, dass Runnable Leichtgewichtiger ist und erst bei Ausführung ein Thread Object erschaffen wird. Auch ist die seperierung zwischen ``Aufgabe'' und ``Bearbeiter'' sinvoll. Man erhält eine große Flexibilität. Die Funktionen des einstellen eines Threads gegen auch nicht verloren. Die Methoden wie \textit{setPriority()} sind public.\cite{Java:Thread} Ein weiterer wichtioger Punkt ist, dass Runnables in einem ThreadPool verwendet werden können.
+
+\subsubsection{Thread pool}
+Ein Thread Pool ist wie eine zweite CPU nur in Software. Es gibt eine Warteschlange und eine festgelegte Anzahl an Threads, welche arbeiten. Der Unterschied dabei ist, dass die Warteschlange nicht aus Threads besteht, sondern aus ``Runnables''. Diese werden auch nur ein einziges Mal ausgeführt und dabei nicht unterbrochen. Auch wird die Warteschlange chronologisch abgearbeitet. Ein Thread pool hat somit ein \textit{nicht-präemtives Scheduling}, welches mit dem \textit{first in first out} Verfahren arbeitet.\newpage
+\begin{figure}[h]
+    \include{images/Threads/ThreadPool.tex}
+    \caption{Thread pool}
+\end{figure}
+In einem Thread pool werden die Aufgaben als ``Runnable'' Object verwaltet. Eine bestimmte Anzahl an Threads arbeiten und erhalten immer neue ``Runnables''. Durch dieses Verfahren, muss nicht für jede Aufgabe ein neuer Thread erstellt werden. Auch ist ein Thread pool effizienter. Wenn viel berechnet werden muss, ist es besser weniger aktive Threads zu benutzten. Würde mann alle Aufgaben gleichzeitig starten, müsste der \textit{System Scheduler} die Threads verwalten. Es würden somit viel mehr Kontextwechsel stattfinden, bis alle Aufgaben abgearbeitet sind. Daher ist eine optimale Größe eines Thread pools in der Größenordnung der vorhandenen Kerne.
 
 \subsubsection{Thread sicherheit}
+\begin{center}
+    \textit{
+        [...]That the concept [of thread safety] itself is completely vague and essentially means nothing more than ``behaves correctly in some situations''[...]
+    } - Eric Lippert \cite{Threads:Lippert}
+\end{center}
+
+Wie Herr Lippert in seinem Artikel bereits klarstellt, ist Thread sicherheit kein besonders kleines Thema. Auch ist Thread sicherheit immer im Auge des Betrachters. Es kommt immer auf die Situation an. Ist etwas in diesem speziellen Szenario Thread sicher? Denn eine allumfangende Thread sicherheit kann in den meisten Fällen nicht erreicht werden. Darum werde ich mich auf einen wichtigen Bereich der Thread sicherheit beschränken.
+\medskip
+\newline
+Wie in Kapitel \ref{Threads} beschrieben, haben Threads einen gemeinsamen globalen Speicher. Das Problem dessen tritt auf, wenn mehrere Threads gleichzeitig auf die selben Speicheradresse zugreifen. Ein simples Beispiel ist, dass erhöhen einer Zahl. Diese Situatuion tritt auch in meinem Programm, siehe Kapitel \ref{Programm}, auf. Dabei versuchen mehrere Threads den selben Integer zu erhöhen. Das Ergebnis ist, dass trotz 2000x erhöhen im Integer nur 1800 gespeichert ist. Um das Problem zu verstehen werde ich erklären, wie ein Integer erhöht wird.\\
+Ein Integer wird nicht an seinem Speicherort geändert. Die Bytes werden erst in den Prozessor geladen und dann mit dem gewünschten Wert addiert. Der alte Wert wird mit dem neuen Wert aus dem Register überschrieben. Im Falle von vielen Threads fetcht\footnote{Deutsch: bringen - Ein Programm ließt Daten.} sich ein Thread den Wert $W_1 = 500$. Thread zwei, welcher kurz nach Thread eins gestartet wurde, fetcht auch den Wert $W_2 = 500$. Beide addieren ihren Teil und erhalten $W_3 = 501$ und $W_4 = 501$. Beide Werte werden anschließend nacheinander auf den alten Wert geschrieben. Wurde somit der Wert zwei mal erhöht, ist aber im Ergebnis nur um eins gestiegen.\cite{ThreadInterference:Oracle}\\
+Um solches Verhalten zu vermeiden, gibt es in Java das Schlüsselwort \textit{synchronized}. Es beschrenkt den Zugriff auf eine Methode oder code Abschnitt auf nur einen Thread. Alle anderen Threads müssen auf das beenden des vorherigen warten. Das Beispiel würde als Thread sichere Version wie folgt aussehen: \cite{SynchronizedMethods:Oracle}
+\begin{figure}[h]
+    \begin{lstlisting}
+public class ThreadSafe{
+
+        int counter=0;
+
+        public synchronized void increase(){
+            counter++;
+        }
+}
+    \end{lstlisting}
+    \captionof{lstlisting}{Thread sicher}
+\end{figure}
 
 MapBild :
 SynchronousJFXFileChooser : https://stackoverflow.com/questions/28920758/javafx-filechooser-in-swing

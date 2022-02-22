@@ -1,0 +1,20 @@
+\begin{tikzpicture}
+    \foreach \q in{0,0.5,...,4}{
+        \filldraw[very thick, draw=black, fill=black!5](0+\q, 7) circle (0.5cm);
+    }
+    \draw[very thick](4, 7) -- (5.7+4, 7);
+    \draw[very thick, -{Stealth[scale=1.5]}](5.7+4, 7) -- (5.7+4, 5.3);
+    \filldraw[very thick, draw=black, fill=black!5](4, 7) circle (0.5cm) node[align=center] {$R_n$};
+
+    \foreach \x in {0,1.6,...,8}{
+        \filldraw[very thick, draw=black, fill=black!10](5.7+\x, 3.7) rectangle (7.3+\x, 5.3);
+        \filldraw[very thick, draw=black, fill=black!5](6.5+\x, 4.5) circle (0.5cm);
+    }
+
+    \foreach \q in{0,0.5,...,4}{
+        \filldraw[very thick, draw=black, fill=black!5](0+\q, 2) circle (0.5cm);
+    }
+    \draw[very thick](5.7+4, 3.7) -- (5.7+4, 2);
+    \draw[very thick, -{Stealth[scale=1.5]}](5.7+4, 2) -- (4.5, 2);
+    \filldraw[very thick, draw=black, fill=black!5](4, 2) circle (0.5cm) node[align=center] {$R_n$};
+\end{tikzpicture}
