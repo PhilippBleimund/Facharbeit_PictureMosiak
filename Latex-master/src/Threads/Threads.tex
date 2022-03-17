@@ -1,5 +1,5 @@
 \section{Threads und Prozesse}
-Prozesse sind die Ausführung eines Programms auf dem Prozessor. Jedoch kann ein Prozessor maximal ein Prozess gleichzeitig ausführen. Um Verwirrung zu beseitigen möchte ich darauf hinweisen, dass selbst moderne Prozessoren nicht in der Lage sind mehrere Prozesse auszuführen. Diese ``Illusion'' wird erzeugt, da ein Prozessor(Bauteil) mehre Kerne hat. Diese Kerne sind die eigentlichen Prozessoren. In Zukunft werde ich den Begriff Kerne nutzen um die Unterscheidung zu erleichtern. Um trotzdem mehrere Prozesse gleichzeitig zu bearbeiten, werden den einzelnen Kernen die Prozesse für nur wenige Millisekunden zugeordnet. Diese nennt man auch Virtuelle Threads. Jeder Virtuelle Thread kann einem realem Kern zugeordnet werden. Jedoch wird nicht jeder Process gleich lange einem Kern zugeordnet. Die Prozesse konkurrieren um ihre Zeit. Denn schließlich soll mein Computerspiel nicht die gleiche Zeit bekommen, wie meine Stoppuhr app. Diese wechsel zwischen den einzelnen Prozessen nennt man auch Kontextwechsel. Der Kontext des Kerns ändert sich demnach.
+Prozesse sind die Ausführung eines Programmes auf dem Prozessor. Jedoch kann ein Prozessor maximal einen Prozess gleichzeitig ausführen. Um Verwirrung zu beseitigen möchte ich darauf hinweisen, dass selbst moderne Prozessoren nicht in der Lage sind mehrere Prozesse auszuführen. Diese ``Illusion'' wird erzeugt, da ein Prozessor(Bauteil) mehrere Kerne hat. Diese Kerne sind die eigentlichen Prozessoren. In Zukunft werde ich den Begriff Kerne nutzen um die Unterscheidung zu erleichtern. Um trotzdem mehrere Prozesse gleichzeitig zu bearbeiten, werden den einzelnen Kernen die Prozesse für nur wenige Millisekunden zugeordnet. Diese nennt man auch Virtuelle Threads. Jeder Virtuelle Thread kann einem realem Kern zugeordnet werden. Jedoch wird nicht jeder Process gleich lange einem Kern zugeordnet. Die Prozesse konkurrieren um ihre Zeit. Denn schließlich soll mein Computerspiel nicht die gleiche Zeit bekommen, wie meine Stoppuhr-App. Dieser Wechsel zwischen den einzelnen Prozessen nennt man auch Kontextwechsel. Der Kontext des Kerns ändert sich demnach.
 
 \begin{figure}[h]
     \centering
@@ -30,17 +30,17 @@ Prozesse sind die Ausführung eines Programms auf dem Prozessor. Jedoch kann ein
 
 \subsection{Aufbau von Prozessen}
 
-Prozesse müssen jedoch noch ein wenig mehr als nur ein Stück code besitzen, um aktiv zu werden. Generell kann man sagen, dass Prozesse aus 7 Elementen bestehen.
+Prozesse müssen noch ein wenig mehr als nur ein Stück code besitzen, um aktiv zu werden. Generell kann man sagen, dass Prozesse aus 7 Elementen bestehen.
 Diese nennt man Prozesskontext. Innerhalb des Prozesskontextes gibt es noch den Hardwarekontext.
 \begin{itemize}
     \setlength\itemsep{0pt}
     \item Das auszuführende Programm
-    \item Die Daten des Programmes. Umfasst etwa die Globalen variablen.
-    \item Einen Stack. Ein Stack funktioniert nach dem push und pop verfahren und speichert die lokalen Variablen für einen schnelleren zugriff.
-    \item Kernelstack. Umfasst die Systemaufrufe des Prozesses.
+    \item Die Daten des Programmes. Umfasst die globalen Variablen
+    \item Einen Stack. Ein Stack funktioniert nach dem push und pop Verfahren und speichert die lokalen Variablen für einen schnelleren Zugriff
+    \item Kernelstack. Umfasst die Systemaufrufe des Prozesses
           \begin{itemize}
               \item CPU Register. Kann in den meisten Fällen nur ein Befehl speichern (64bit Prozessor = 64bits im Register)
-              \item MMU Register, dass den zugriff auf den Arbeitsspeicher verwaltet.
+              \item MMU Register, dass den Zugriff auf den Arbeitsspeicher verwaltet
           \end{itemize}
 \end{itemize}
 
@@ -48,14 +48,14 @@ Da ein Prozess viele Kontextwechsel durchleben wird, muss das Betriebssystem bes
 
 \begin{itemize}
     \setlength\itemsep{0pt}
-    \item Instruction Pointer - Die Speicheradresse des nächsten Befehls.
-    \item Instruction Register - Der aktuelle Befehl.
-    \item Stackpointer - Speichert das ende des Stacks.
-    \item Basepointer - Speicheradresse des aktuellen Elementes im Stack.
-    \item Akkumulator - Speichert, Ergebnisse der ALU
+    \item Instruction Pointer - die Speicheradresse des nächsten Befehls
+    \item Instruction Register - der aktuelle Befehl
+    \item Stackpointer - speichert das Ende des Stacks
+    \item Basepointer - Speicheradresse des aktuellen Elementes im Stack
+    \item Akkumulator - speichert Ergebnisse der ALU
 \end{itemize}
 
-Dies sind die wichtigsten Informationen, um die Rechenoperationen weiterführen zu können. Das Betriebssystem braucht jedoch noch weitere Informationen über einen Prozess. Diese werden auch Systemkontext genannt. Die wichtigsten davon sind:
+Dies sind die wichtigsten Informationen, um die Rechenoperationen weiterführen zu können. Das Betriebssystem braucht noch weitere Informationen über einen Prozess. Sie werden auch Systemkontext genannt. Die wichtigsten davon sind:
 
 \begin{itemize}
     \setlength\itemsep{0pt}
@@ -64,19 +64,19 @@ Dies sind die wichtigsten Informationen, um die Rechenoperationen weiterführen 
     \item Prozesszustand
     \item Priorität
     \item Eltern- oder Kindprozesse
-    \item Zugriffsrechte - Linux: -20 bis 19; Windows: Rechte werden einzeln zugeteilt
-    \item Erlaubte Ressourcenmengen - Bsp. Maximaler RAM verbrauch
+    \item Zugriffsrechte - Linux: -20 bis 19
+    \item Erlaubte Ressourcenmengen - Bsp. Maximaler RAM Verbrauch
     \item Verwendete Dateien - Um zu verhindern, dass mehre Prozesse an einer Datei arbeiten
     \item Zugeordnete Geräte - Maus, Tastatur, ...
 \end{itemize}
 
-Mithilfe der Prozesstabelle kann das Betriebssystem die einzelnen Prozesse speichern. In dieser werden Prozesskontrollblöcke gespeichert, welche den Hardwarekontext und Systemkontext beinhaltet. Bei einem Kontextwechsel wird der Prozesskontext aus der Prozesstabelle wieder hergestellt.
+Mithilfe der Prozesstabelle kann das Betriebssystem die einzelnen Prozesse speichern. In dieser werden Prozesskontrollblöcke gespeichert, welche den Hardwarekontext und Systemkontext beinhalten. Bei einem Kontextwechsel wird der Prozesskontext aus der Prozesstabelle wieder hergestellt.
 
 \newpage
 
 \subsection{Verwalten der Prozesse}
 
-Jedes Betriebssystem muss einen weg haben, um effektiv die Kontextwechsel der Prozesse durchführen zu können. Dazu wird in den meisten Fällen ein \textit{Warteschlange Prozesse}\ref{Warteschlange Prozesse} verwendet. Auch hat ein Prozess deutlich mehr Zustände als nur \textit{untätig} und \textit{rechnend} in einem modernen Betriebssystem. Dazu wird heutzutage meistens das \textit{Prozessmodell}\ref{Prozessmodell} oder eine modifizierte Variante. Linux als Beispiel verwendet ein \textit{8-Zustands Prozessmodell}, welches das Modell mit einem \textit{kernel rechnend} Zustand erweitert.
+Jedes Betriebssystem muss einen Weg haben, um effektiv die Kontextwechsel der Prozesse durchführen zu können. Dazu wird in den meisten Fällen ein Warteschlangen System, siehe Abbildung \ref{Warteschlange Prozesse}, verwendet. Auch hat ein Prozess deutlich mehr Zustände als nur \textit{untätig} und \textit{rechnend} in einem modernen Betriebssystem. Dazu wird heutzutage meistens das Prozessmodell wie in Abbildung \ref{Prozessmodell} oder eine modifizierte Variante verwendet. Linux als Beispiel verwendet ein \textit{8-Zustands Prozessmodell}, welches das Modell mit einem \textit{kernel rechnend} Zustand erweitert.
 
 \begin{figure}[h]
     \centering
