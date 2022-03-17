@@ -207,7 +207,7 @@ Dabei ist \textit{weigth} mit 1024 oder \textit{nice\_0} definiert. \textit{lw.w
 \newpage
 
 \subsubsection{Round Robin}
-Das Round Robin(RR) Verfahren ist weitverbreitet. Es wird in abgewandelter Form auch heutzutage in Windows verwendet.\cite{Windows:Lohmann} Das RR \textit{Scheduling} nutzt Zeitquanten. Diese Befinden sich meistens im ein- oder zweistelligen Millisekundenbereich. Jeder Prozess wird nacheinander für die Länge des Zeitquanten ausgeführt und danach dem Prozessor einzogen. Ist der Prozess früher beendet, wird ein neuer Zeitquant eingeleitet. Ist der Prozess nicht beendet, wird er wieder in die Warteschlange am Ende angehängt.\\
+Das Round Robin(RR) Verfahren ist weitverbreitet. Es wird in abgewandelter Form auch heutzutage in Windows verwendet.\cite{Windows:Lohmann} Das RR \textit{Scheduling} nutzt Zeitquanten. Diese Befinden sich meistens im ein- oder zweistelligen Millisekundenbereich. Jeder Prozess wird nacheinander für die Länge des Zeitquanten ausgeführt und danach dem Prozessor entzogen. Ist der Prozess früher beendet, wird ein neuer Zeitquant eingeleitet. Ist der Prozess nicht beendet, wird er wieder in die Warteschlange am Ende angehängt.\cite[Seite 176f.]{BetriebssystemeKompakt}\\
 \begin{figure}[h]
     \centering
     \begin{tabular}{| l | l |}
@@ -236,7 +236,7 @@ Das Round Robin(RR) Verfahren ist weitverbreitet. Es wird in abgewandelter Form 
 In \ref{RoundRobin} werden vier Prozesse in der vorgegebenen Reihenfolge abgearbeitet. Die Zeitquanten in dem Beispiel sind 20ms lang. Prozess C benötigt nur ein Zeitquanten und wird beendet. Prozesse A und D benötigen 1.5 Zeitquanten. Sie arbeiten beim Zweiten mal nur 10ms und der nächste Prozess kann nachrücken. Prozess B benötigt am meisten Zeit und wird drei mal ausgeführt. Erst beim dritten mal kann er beendet werden.
 \medskip
 \newline
-Das Round Robin Verfahren kann noch mit Prioritäten erweitert werden. Dieses werde ich am Beispiel des \textit{Schedulers} von Windows erklären. Windows verwendet ein Prioritätengesteuertes \textit{Scheduling}\footnote{Die Prioritäten von Windows reichen dabei von 0 bis 31}. Das Round Robin Verfahren wird dabei immer auf die selbe Priorität angewendet. Die höhere Priorität wird immer bevorzugt. Dazu wird für jede Priorität eine eigene Warteschlange angelegt. Um das verhungern eines Prozesses zu verhindern, nutzt Windows noch Variable Prioritäten. Bei den Variablen Prioritäten hat Windows noch die Möglichkeit selber zu ermitteln welche Prozesse wichtiger sind.
+Das Round Robin Verfahren kann noch mit Prioritäten erweitert werden. Dieses werde ich am Beispiel des \textit{Schedulers} von Windows erklären. Windows verwendet ein Prioritätengesteuertes \textit{Scheduling}\footnote{Die Prioritäten von Windows reichen dabei von 0 bis 31}. Das RR Verfahren wird dabei immer auf die selbe Priorität angewendet. Die höhere Priorität wird immer bevorzugt. Dazu wird für jede Priorität eine eigene Warteschlange angelegt. Um das verhungern eines Prozesses zu verhindern, nutzt Windows noch Variable Prioritäten. Bei den Variablen Prioritäten hat Windows noch die Möglichkeit selber zu ermitteln welche Prozesse wichtiger sind.\cite[Folie 9-12]{Windows:Lohmann}
 \medskip
 \newline
 Mit dem Round Robin Verfahren kann grundsätzlich eine Faire Umgebung geschaffen werden. Werden jedoch Prioritäten ohne Variation bevorzugt, kann es zu einem Unfairen System werden. Auch sind I\/O-lastige\footnote{I\/O = Input\/Output. Ein Prozess wartet z.B. auf eine Eingabe des Benutzers.} Prozesse benachteiligt. Sie benötigen selber nur wenig Ausführungszeit, müssen aber für das reibungslose Funktionieren häufiger Zugriff auf den Prozessor erhalten. Im Round Robin \textit{Scheduling} müssen sie warten bis Rechenintensive Prozesse den Zeitquanten vollständig verbrauchen, bevor sie wieder an der Reihe sind.
@@ -245,21 +245,21 @@ Mit dem Round Robin Verfahren kann grundsätzlich eine Faire Umgebung geschaffen
 In Modernen Computer Systemen gibt es noch Threads neben Prozessen. Threads sind dabei deutlich häufiger vertreten als Prozesse. Auf meinem Computer laufen durchschnittlich 20x mehr Threads als Prozesse. Dies liegt daran, dass Threads als Prozess eines Prozesses gesehen werden. Ein Programm ist nur ein Prozess kann aber aber viele eigene Threads besitzen. Die Funktionalität von Threads unterscheidet sich nicht viel von Prozessen. Sie werden im \textit{Scheduler} gleich behandelt und es gibt nur geringe Unterschiede bei dem Kontextwechsel.
 \medskip
 \newline
-Threads haben jedoch ein paar Besonderheiten gegenüber Prozessen. Denn im Gegensatz zu Prozessen, welche unabhängig voneinander Laufen, haben Threads diese Beschränkung nicht. Dies liegt daran, dass Threads auf den Stack des Prozesses zugreifen können. Threads teilen sich somit die globalen Variablen des Prozesses, speichern aber eigene lokale Variablen im eigenen Stack. Wegen diesem Prinzip können mehrere Threads mit dem selben Code arbeiten, ohne sich gegenseitig zu behindern.
+Threads haben jedoch ein paar Besonderheiten gegenüber Prozessen. Denn im Gegensatz zu Prozessen, welche unabhängig voneinander Laufen, haben Threads diese Beschränkung nicht. Dies liegt daran, dass Threads auf den Stack des Prozesses zugreifen können. Threads teilen sich somit die globalen Variablen des Prozesses, speichern aber eigene lokale Variablen im eigenen Stack. Wegen diesem Prinzip können mehrere Threads mit dem selben Code arbeiten, ohne sich gegenseitig zu behindern.\cite{Threads:Williams}
 \begin{figure}[h]
     \centering
     \input{images/Threads/ThreadinProzess.tex}
     \caption{Threads}
 \end{figure}
-Threads werden als teil eines Prozesses betrachtet. Deswegen sind sie viel Leichtgewichtiger und können schneller erstellt und beendet werden. Zusätzlich werden Threads in zwei Kategorien unterteilt.
+\\Threads werden als teil eines Prozesses betrachtet. Deswegen sind sie viel Leichtgewichtiger und können schneller erstellt und beendet werden. Zusätzlich werden Threads in zwei Kategorien unterteilt.
 \begin{itemize}
     \item Nutzer Level Threads. Diese werden mithilfe einer Thread-library implementiert und sind unabhängig von dem Betriebssystem. Folgend können Nutzer Level Threads auch auf einem System ohne unterstütztem Multiprozessing in Betrieb genommen werden. Außerdem ist das Management von vielen Threads schneller, da keine Systemaufrufe getätigt werden müssen.
     \item Kernel Level Threads. Diese werden vom Betriebssystem implementiert und auch von diesem verwaltet. Dadurch ergeben sich Vorteile, wie auch Nachteile. Ein Vorteil wäre, dass Prozesse mit einer hohen Thread Anzahl bevorzugt werden könnten. Der Nachteil ist, dass die Verwaltung auf Kernel Ebene deutlich Intensiver ist. Auch muss für jeden Thread ein einzelner Kontrollblock erstellt werden. \cite{Threads:Dusey}
 \end{itemize}
 \subsection{Threads in Java}
-In Java sind die Threads auf dem Kernel Level implementiert. In Versionen vor 1.2(1998) gab es die so genannten grünen Threads. Diese waren Nutzer Level Threads von der Java VM. Der Vorteil durch das Modernere Modell, ist dass die gesamte CPU genutzt werden kann. Ein Prozess mit mehreren Threads kann somit alle vorhandenen CPU Kerne benutzen. Im alten Modell wurde dies über Umwege gelöst. So wurden ein paar Kernel Level Threads erstellt, welche dann die grünen Threads zugewiesen bekamen.
+In Java sind die Threads auf dem Kernel Level implementiert. In Versionen vor 1.2(1998) gab es die so genannten grünen Threads. Diese waren Nutzer Level Threads von der Java VM. Der Vorteil durch das Modernere Modell, ist dass die gesamte CPU genutzt werden kann. Ein Prozess mit mehreren Threads kann somit alle vorhandenen CPU Kerne benutzen. Im alten Modell wurde dies über Umwege gelöst. So wurden ein paar Kernel Level Threads erstellt, welche dann die grünen Threads zugewiesen bekamen.\cite{Threads:Cox}
 \subsubsection{Implementation in Java}
-Threads werden in java mithilfe der \textit{java.lang.Thread} Klasse verwirklicht. Es wird dabei zwischen zwei unterschiedlichen Implementierungen unterschieden.\\
+Threads werden in java mithilfe der \textit{java.lang.Thread} Klasse verwirklicht. Es wird dabei zwischen zwei unterschiedlichen Implementierungen unterschieden.
 \smallskip
 \newline
 \textbf{extends Thread:} Bei dieser Methode wird eine Klasse erstellt, welche die Thread Klasse erweitert. Der Vorteil dieses Vorgehens ist, dass alle Einstellungen innerhalb der neuen Klasse getätigt werden können.\cite{Java:Thread}
@@ -325,7 +325,7 @@ Ein Thread Pool ist wie eine zweite CPU nur in Software. Es gibt eine Warteschla
     \include{images/Threads/ThreadPool.tex}
     \caption{Thread pool}
 \end{figure}
-In einem Thread pool werden die Aufgaben als ``Runnable'' Object verwaltet. Eine bestimmte Anzahl an Threads arbeiten und erhalten immer neue ``Runnables''. Durch dieses Verfahren, muss nicht für jede Aufgabe ein neuer Thread erstellt werden. Auch ist ein Thread pool effizienter. Wenn viel berechnet werden muss, ist es besser weniger aktive Threads zu benutzten. Würde mann alle Aufgaben gleichzeitig starten, müsste der \textit{System Scheduler} die Threads verwalten. Es würden somit viel mehr Kontextwechsel stattfinden, bis alle Aufgaben abgearbeitet sind. Daher ist eine optimale Größe eines Thread pools in der Größenordnung der vorhandenen Kerne.
+In einem Thread pool werden die Aufgaben als ``Runnable'' Object verwaltet. Eine bestimmte Anzahl an Threads arbeiten und erhalten immer neue ``Runnables''. Durch dieses Verfahren, muss nicht für jede Aufgabe ein neuer Thread erstellt werden. Auch ist ein Thread pool effizienter. Wenn viel berechnet werden muss, ist es besser weniger aktive Threads zu benutzten. Würde mann alle Aufgaben gleichzeitig starten, müsste der \textit{System Scheduler} die Threads verwalten. Es würden somit viel mehr Kontextwechsel stattfinden, bis alle Aufgaben abgearbeitet sind. Daher ist eine optimale Größe eines Thread pools in der Größenordnung der vorhandenen Kerne.\cite{ThreadPool:Java}
 
 \subsubsection{Thread sicherheit}
 \begin{center}
@@ -353,7 +353,3 @@ public class ThreadSafe{
     \end{lstlisting}
     \captionof{lstlisting}{Thread sicher}
 \end{figure}
-
-MapBild :
-SynchronousJFXFileChooser : https://stackoverflow.com/questions/28920758/javafx-filechooser-in-swing
-Answer from Sergei Tachenov

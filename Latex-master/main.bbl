@@ -8,6 +8,10 @@
 {\sc Chidambaram, P.~V.}: {\em Linux Kernel Scheduler\/}.
 \newblock \url{https://www.youtube.com/watch?v=Jl_0W4o0xao}, 2020.
 
+\bibitem{Threads:Cox}
+{\sc Cox, G.}: {\em Threading Models in Java\/}.
+\newblock \url{https://www.baeldung.com/java-threading-models}, 2021.
+
 \bibitem{Threads:Dusey}
 {\sc Dusey, A.}: {\em Threads and its types in Operating System\/}.
 \newblock
@@ -68,6 +72,12 @@
   \url{https://docs.oracle.com/javase/tutorial/essential/concurrency/interfere.html},
   2014.
 
+\bibitem{ThreadPool:Java}
+{\sc Oracle}: {\em Thread Pools\/}.
+\newblock
+  \url{https://docs.oracle.com/javase/tutorial/essential/concurrency/pools.html},
+  2014.
+
 \bibitem{CFS:Rebeiro}
 {\sc Rebeiro, P.~C.}: {\em Lecture 22 Completely Fair Scheduling\/}.
 \newblock \url{https://www.youtube.com/watch?v=scfDOof9pww}, 2017.
@@ -87,6 +97,12 @@
 {\sc Williams, L.}: {\em CPU Scheduling Algorithms in Operating Systems\/}.
 \newblock
   \url{https://www.guru99.com/cpu-scheduling-algorithms.html#:~:text=Six%20types%20of%20process%20scheduling%20algorithms%20are%3A%20First%20Come%20First,%2C%206)%20Multilevel%20Queue%20Scheduling.},
+  2022.
+
+\bibitem{Threads:Williams}
+{\sc Williams, L.}: {\em Process vs Thread: What’s the difference?\/}.
+\newblock
+  \url{https://www.guru99.com/difference-between-process-and-thread.html},
   2022.
 
 \end{thebibliography}
