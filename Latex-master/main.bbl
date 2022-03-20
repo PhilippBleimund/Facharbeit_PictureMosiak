@@ -24,6 +24,10 @@
   \url{https://www.linkedin.com/pulse/20140629145049-21586023-understanding-linux-scheduling},
   2014.
 
+\bibitem{Scalr:Kalla}
+{\sc Kalla, R.}: {\em imgscalr\/}.
+\newblock \url{https://github.com/rkalla/imgscalr}, 2018.
+
 \bibitem{Scheduler:Kerrisk}
 {\sc Kerrisk, M.}: {\em sched - overview of CPU scheduling\/}.
 \newblock \url{https://man7.org/linux/man-pages/man7/sched.7.html}, 2021.

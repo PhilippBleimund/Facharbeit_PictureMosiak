@@ -7,44 +7,44 @@ Reallocating 'name_of_file' (item size: 1) to 9 items.
 The style file: gerabbrv.bst
 Reallocating 'name_of_file' (item size: 1) to 14 items.
 Database file #1: src/literatur.bib
-You've used 20 entries,
+You've used 21 entries,
             2344 wiz_defined-function locations,
-            649 strings with 7457 characters,
-and the built_in function-call counts, 4649 in all, are:
-= -- 475
-> -- 140
+            655 strings with 7542 characters,
+and the built_in function-call counts, 4881 in all, are:
+= -- 499
+> -- 147
 < -- 0
-+ -- 60
-- -- 40
-* -- 220
-:= -- 732
-add.period$ -- 40
-call.type$ -- 20
-change.case$ -- 60
++ -- 63
+- -- 42
+* -- 231
+:= -- 768
+add.period$ -- 42
+call.type$ -- 21
+change.case$ -- 63
 chr.to.int$ -- 0
-cite$ -- 20
-duplicate$ -- 184
-empty$ -- 500
-format.name$ -- 40
-if$ -- 1094
+cite$ -- 21
+duplicate$ -- 193
+empty$ -- 525
+format.name$ -- 42
+if$ -- 1149
 int.to.chr$ -- 0
-int.to.str$ -- 20
+int.to.str$ -- 21
 missing$ -- 2
-newline$ -- 83
-num.names$ -- 40
-pop$ -- 160
+newline$ -- 87
+num.names$ -- 42
+pop$ -- 168
 preamble$ -- 1
-purify$ -- 60
+purify$ -- 63
 quote$ -- 0
-skip$ -- 179
+skip$ -- 188
 stack$ -- 0
-substring$ -- 100
-swap$ -- 59
+substring$ -- 105
+swap$ -- 62
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 78
+type$ -- 82
 warning$ -- 0
-while$ -- 40
-width$ -- 22
-write$ -- 180
+while$ -- 42
+width$ -- 23
+write$ -- 189
