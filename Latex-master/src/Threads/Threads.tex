@@ -93,7 +93,7 @@ Jedes Betriebssystem muss einen Weg haben, um effektiv die Kontextwechsel der Pr
 \end{figure}
 
 \newpage
-\footnotetext{Grafik in Anlehnung an \cite[Seite 154]{BetriebssystemeKompakt}}
+\footnotetext{Grafik in Anlehnung an \cite[Seite 156]{BetriebssystemeKompakt}}
 
 Wie in der Einleitung schon angesprochen sind die Zustände \textit{bereit} und \textit{rechnend} die wichtigsten Zustände. Mit diesen alleine könnte ein Betriebssystem funktionieren. Es gäbe dazu dann nur eine Warteschlange, in der sich alle Prozesse des Zustandes \textit{bereit} befinden. Idealer Weise implementiert der \textit{Scheduler}\footnote{Programm zum Managen der Warteschlangen.}  einen Algorithmus, welcher die Priorität der Prozesse berücksichtigt. Wie schon erwähnt muss sich der \textit{Dispatcher}\footnote{Programm zum ausführen der Prozesswechsel.} um noch weitere Zustände kümmern. Diese und ihre Beziehungen sind in Grafik \ref{Prozessmodell} zu finden. Zwei davon währen \textit{neu} und \textit{beendet}. Diese sind für eine größere Flexibilität nützlich. Mit dem \textit{beendet} Zustand, können Informationen nachträglich von einem fertigen Prozess aufgerufen werden. Der Zustand \textit{neu} hat die gemeinsame Funktion mit dem \textit{beendet}-Zustand Ressourcen zu sparen.\newline
 Ein Entschiedener Fehler ist es anzunehmen, dass alle Prozesse jederzeit Arbeiten wollen. So könnte ein Programm auf eine Tastatur Eingabe oder andere Ereignisse warten. Um diese Funktionalität bereitstellen zu können gibt es den Zustand \textit{blockiert}. In diesen wechselt ein Prozess nach den berechnen und kann aus diesen sich wieder in die Warteschlange der bereiten Prozesse einordnen. In Grafik \ref{Warteschlange Prozesse} werden unterschiedliche Warteschlangen für unterschiedliche Ereignisse erzeugt. Dieses Vorgehen hat den Vorteil gegenüber einer einzelnen ``blockiert-Warteschlange'', dass häufig genutzte Events wie Tastenanschläge nicht von seltenen Events beeinträchtigt werden.\newline
@@ -323,8 +323,10 @@ public class SimpleRunnable implements Runnable{
 Ein Thread Pool ist wie eine zweite CPU nur in Software. Es gibt eine Warteschlange und eine festgelegte Anzahl an Threads, welche arbeiten. Der Unterschied dabei ist, dass die Warteschlange nicht aus Threads besteht, sondern aus ``Runnables''. Diese werden auch nur ein einziges Mal ausgeführt und dabei nicht unterbrochen. Auch wird die Warteschlange chronologisch abgearbeitet. Ein Thread pool hat somit ein \textit{nicht-präemtives Scheduling}, welches mit dem \textit{first in first out} Verfahren arbeitet.\newpage
 \begin{figure}[h]
     \include{images/Threads/ThreadPool.tex}
-    \caption{Thread pool}
+    \caption{Thread pool\protect\footnotemark}
+    \label{Thread Pool}
 \end{figure}
+\footnotetext{Grafik in Anlehnung an \url{https://en.wikipedia.org/wiki/Thread_pool}}
 In einem Thread pool werden die Aufgaben als ``Runnable'' Object verwaltet. Eine bestimmte Anzahl an Threads arbeiten und erhalten immer neue ``Runnables''. Durch dieses Verfahren, muss nicht für jede Aufgabe ein neuer Thread erstellt werden. Auch ist ein Thread pool effizienter. Wenn viel berechnet werden muss, ist es besser weniger aktive Threads zu benutzten. Würde mann alle Aufgaben gleichzeitig starten, müsste der \textit{System Scheduler} die Threads verwalten. Es würden somit viel mehr Kontextwechsel stattfinden, bis alle Aufgaben abgearbeitet sind. Daher ist eine optimale Größe eines Thread pools in der Größenordnung der vorhandenen Kerne.\cite{ThreadPool:Java}
 
 \subsubsection{Thread sicherheit}

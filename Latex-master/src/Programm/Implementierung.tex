@@ -107,7 +107,7 @@ Wenn die neu berechnete y-Achse kleiner ist als die des Sektors wird das selbe m
 Einleitend muss ich zu diesem Abschnitt sagen, dass ich die Folgenden Methoden nicht selber implementiert habe. Ich nutzte dazu die imgskalr library von Riyad Kalla, welche auf der Bilineare und Bikubischen Interpolation von Javas ``Graphics2D'' beruht.\cite{Scalr:Kalla} Im folgenden werde ich die Bilineare Interpolation erklären. Auf die Bikubische werde ich nur kurz eingehen.
 \medskip
 \newline
-Bei dem Hochskalieren von Bildern stößt man auf das Problem, dass Farbwerte erfunden werden müssen. Andere Algorithmen erfinden keine neuen Farben und sind gut für Pixel Bilder geeignet. Für Landschaftsbilder würde dies lediglich ein verpixeltes Bild ergeben. Um neue Farbwerte zu Berechnen, wird bei der Bilinearen Interpolation linear Farbwerte berechnet.
+Bei dem Hochskalieren von Bildern stößt man auf das Problem, dass Farbwerte erfunden werden müssen. Andere Algorithmen erfinden keine neuen Farben und sind gut für Pixel Bilder geeignet (nearest neighbour). Für Landschaftsbilder würde dies lediglich ein verpixeltes Bild in einer größeren Auflösung ergeben. Um neue Farbwerte zu Berechnen, werde diese bei der Bilinearen Interpolation linear zwischen den Pixeln berechnet.
 
 \begin{figure}[h]
     \centering
@@ -120,13 +120,13 @@ Bei dem Hochskalieren von Bildern stößt man auf das Problem, dass Farbwerte er
     \caption[Bilinear]{Bilineare Interpolation}
 \end{figure}
 
-Die unterschiedlichen Höhen in der der Grafik repräsentieren die Unterschiedlichen Farbwerte der Pixel. Das 3x3 Bild wird um den Faktor 3 skaliert. Zuerst wird ein Netz zwischen den einzelnen Werten gespannt. Die neuen Farbwerte entstehen an den Schnittpunkten des Netzes. Der Farbwert lässt sich somit mit den folgenden Gleichungen berechnen.
+Die unterschiedlichen Höhen in der der Grafik repräsentieren die Unterschiedlichen Farbwerte der Pixel. Das 3x3 Bild wird um den Faktor 3 skaliert. Zuerst wird ein Netz zwischen den einzelnen Werten gespannt. Die neuen Farbwerte entstehen an den Schnittpunkten des Netzes. Der Farbwert lässt sich somit mit den folgenden Gleichungen berechnen.\cite{Bilinear:Pound}
 \begin{flalign}
     F_\mathnormal{neuX}=(F_\mathnormal{1\,0}-F_\mathnormal{0\,0})\cdot\frac{n_x}{S_\mathnormal{fak.}} \label{eq:WNeuX}\\
     F_\mathnormal{neuY}=(F_\mathnormal{1\,1}-F_\mathnormal{0\,1})\cdot\frac{n_y}{S_\mathnormal{fak.}} \label{eq:WNeuY}\\
     F_\mathnormal{neu}=F_\mathnormal{0\,0}+(F_\mathnormal{neuX})+(F_\mathnormal{neuY}-F_\mathnormal{neuX})\cdot\frac{n_y}{S_\mathnormal{fak.}} \label{eq:WNeu}
 \end{flalign}
-In den Gleichungen \ref{eq:WNeuX} und \ref{eq:WNeuY} werden die Start- und End-Punkte einer Netzlinie berechnet. $n_x$ und $n_y$ sind Zähler, welche die gewünschte Position in dem Teilnetz angibt. Das Maximum der beiden ist $S_\mathnormal{fak.}+1$. $S_\mathnormal{fak.}$ ist dabei der Faktor, um wie viel das Bild skaliert werden soll. Der Unterschied zischen Bilinearer Interpolation und Bikubischen ist, dass bei der Bilinearen lediglich zwei Linien aus jeweils zwei Punkte benutzt werden. Bei der Bikubischen werden vier kubische Spline Funktion aus jeweils vier Punkten benutzt. Der Vorteil der Bikubischen ist, dass das resultierende Bild einen höheren Kontrast bekommt. Auch können Komplexere Formen besser berücksichtigt werden.
+In den Gleichungen \ref{eq:WNeuX} und \ref{eq:WNeuY} werden die Start- und End-Punkte einer Netzlinie berechnet. $n_x$ und $n_y$ sind Zähler, welche die gewünschte Position in dem Teilnetz angibt. Das Maximum der beiden ist $S_\mathnormal{fak.}+1$. $S_\mathnormal{fak.}$ ist dabei der Faktor, um wie viel das Bild skaliert werden soll. Der Unterschied zischen Bilinearer Interpolation und Bikubischen ist, dass bei der Bilinearen lediglich zwei Linien aus jeweils zwei Punkte benutzt werden. Bei der Bikubischen werden vier kubische Spline Funktion aus jeweils vier Punkten benutzt. Der Vorteil der Bikubischen ist, dass das resultierende Bild einen höheren Kontrast bekommt. Auch können Komplexere Formen besser berücksichtigt werden.\cite[Seite 37]{Bicubic:Rowe}
 
 \begin{figure}[h]
     \centering
