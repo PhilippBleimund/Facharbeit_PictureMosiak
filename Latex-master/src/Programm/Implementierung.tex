@@ -1,5 +1,5 @@
 \subsection{Implementation in Java}
-\subsubsection{Berechnen der Sektionen}
+\subsubsection{Berechnen der Sektoren}\label{BerechnenSektoren}
 Die Größe des Bildes und in wie viele Teile dieses aufgeteilt werden soll ist bekannt. Dazu wird zum Beispiel die Breite des Bildes mit der horizontalen Anzahl an Sektoren geteilt. Ein Problem liegt darin, dass die Breite oder Höhe des Bildes nicht immer ein Vielfaches von den gewünschten Sektoren ist. Um das Problem zu lösen wird die Division mit Integers durchgeführt und der Rest gespeichert. Übergeblieben sind wie viele Spalten sich auf der X- und Y-Achse befinden und der Rest an Pixel. Im nächsten Schritt werden die Größen der Sektoren in Pixel berechnet. Es werden dazu zwei Integer Arrays für die X- und Y-Achse erschaffen. Jedes Element repräsentiert die Pixel Breite/Höhe seines Sektors. Standardmäßig besitzt jedes Element die Anzahl an Sektoren als Größe. Um den obigen berechneten Rest an Pixel zu verteilen, wird ein weiteres Array mit der Anzahl an Spalten als Länge aufsteigend nummeriert. Das Array wird anschließend von einer Methode gemischt. Eine abschließende Schleife wird mit der Anzahl des Restes wiederholt. Bei jedem Schritt wird ein dann zufälliger Wert aus dem Array als Index für das Array mit der Größe der Sektoren genutzt. Das nun zufällige Segment wird um 1 erhöht. Die berechneten Werte werden in einem \textit{splitObj} gespeichert. In diesem werden die Werte in unterschiedlichsten Arten wie z.B. Koordinaten gespeichert. 
 
 Diese Koordinaten werden im nächsten Schritt benutzt, um ein zweidimensionales Array an \textit{BufferedImages} aus dem original Bild zu extrahieren. Dazu wird die \textit{getSubimage()} Methode der Klasse \textit{BufferedImage} verwendet.
@@ -25,7 +25,7 @@ Besonders werde ich auf die Methode \textit{compareTo()}, des Interfaces Compara
 \newpage
 
 \subsubsection{Berechnen der besten Bilder}
-Das Berechnen der besten Bilder für die jeweiligen Sektoren wird in der Klasse \textit{compareColor} mit der Methode \textit{compare()} ausgeführt. Die Methode gibt ein zweidimensionales \textit{File}-Array zurück. Dies steht dabei für die einzelnen Sektoren. Innerhalb der Methode wird für jeden Sektor ein \textit{Runnable} erstellt. (siehe Kapitel Threads). Da es ein Limit für die Verwendung der Bilder gibt, sollen diese gleichmäßig verteilt werden. Um einen solchen Effekt zu erhalten wird eine Liste an \textit{Runnables} erstellt und gemischt.
+Das Berechnen der besten Bilder für die jeweiligen Sektoren wird in der Klasse \textit{compareColor} mit der Methode \textit{compare()} ausgeführt. Die Methode gibt ein zweidimensionales \textit{File}-Array zurück. Dies steht dabei für die einzelnen Sektoren. Innerhalb der Methode wird für jeden Sektor ein \textit{Runnable} erstellt. (siehe Abschnitt \ref{ThreadsInJava}). Da es ein Limit für die Verwendung der Bilder gibt, sollen diese gleichmäßig verteilt werden. Um einen solchen Effekt zu erhalten wird eine Liste an \textit{Runnables} erstellt und gemischt.
 
 \begin{figure}[h]
     \centering
@@ -39,16 +39,16 @@ Das Berechnen der besten Bilder für die jeweiligen Sektoren wird in der Klasse 
 \end{figure}
 
 \begin{sloppypar}
-Jeder \textit{Runnable} sucht demnach nach dem besten Bild, welches noch verfügbar ist. Es werden dazu alle vorhandenen Datenbanken durchgegangen und für jede einzelne das beste Bild gesucht. Die besten aus allen Datenbanken werden dann verglichen und der Beste Wert wird gewählt. Um die beste Farbe einer Datenbank zu berechnen kann die java Methode \textit{Arrays.binarySearch} verwendet werden. Diese Methode findet nicht nur den gleichen Wert, sondern auch einen index, an dem es den gesuchten Wert einsetzen würde. Anhand von dem Index wird dann im Array jeweils das nächste beste Bilde, welches noch nicht zu häufig verwendet wurde, gesucht. Die beiden gefundenen Werte, werden auf nähe zum gesuchten Wert überprüft. Der nähere wird dementsprechend auserwählt.
+Jeder \textit{Runnable} sucht demnach nach dem besten Bild, welches noch verfügbar ist. Aus jeder Datenbank wird mithilfe einer binären Suche das beste Bild bestimmt. Diese werden untereinander verglichen und das finale Bild bestimmt. Die binäre Suche wird mithilfe der Java Methode \textit{Arrays.binarySearch} realisiert werden. Sie findet nicht nur den exakten Wert, sondern auch einen Index, wo er sich befinden könnte. Um das Verwendungslimit eines Bildes nicht zu überschreiten wird, von dem Index als Mitte, immer weiter nach links und rechts gegangen. Die beiden Werte, werden auf Farbnähe zum mittigen Wert überprüft. Der Nähere wird dementsprechend auserwählt. Durch die Nutzung der \textit{fileAndColor} Klasse ist der Speicherort des Bildes bekannt.
 \end{sloppypar}
 
 \newpage
 
 \subsubsection{Skalieren der Bilder}
-Das Skalieren der Bilder ist in drei Schritte einzuteilen. Das Management der Bilder, Berechnen der Zielgröße und das Skalieren an sich. Ich werde auf jeden Bereich individuell eingehen.
+Das Skalieren der Bilder ist in drei Schritte einzuteilen. Das Management der Bilder, berechnen der Zielgröße und das Skalieren an sich. Ich werde auf jeden Bereich individuell eingehen.
 
 \paragraph{Management}\mbox{}\\
-Da Ein Bild mehrfach ausgewählt werden kann, ist es wichtig ein Management System zu haben, welches verhindert, dass das selbe Bild nicht häufiger als nötig skaliert wird. Das Skalieren ist der Zeitaufwendigste Prozess, daher sollte dieser minimiert werden. Jedes Bild kann in vier unterschiedlichen Größen verwendet werden. Die Größen kommen aus dem in (siehe Berechnen der Sektionen) beschriebenen vorgehen. Werden die Bilder nur in einer einheitlichen Größe skaliert Entstehen schwarze Linien im Bild.
+Da ein Bild mehrfach ausgewählt werden kann, ist es wichtig ein Management System zu haben, welches verhindert, dass das selbe Bild nicht häufiger als nötig skaliert wird. Das Skalieren ist der zeitaufwendigste Prozess, daher sollte dieser minimiert werden. Jedes Bild wird in vier unterschiedlichen Größen verwendet werden. Die Größen entstehen aus dem in Abschnitt \ref{BerechnenSektoren} beschriebenen Vorgehen. Werden die Bilder nur in einer einheitlichen Größe skaliert entstehen schwarze Linien im Bild.
 
 \begin{figure}[h]
     \centering
@@ -61,10 +61,10 @@ Da Ein Bild mehrfach ausgewählt werden kann, ist es wichtig ein Management Syst
     \caption[Schwarze Linien]{vierfache Skalierung der Bilder}
 \end{figure}
 
-Beim Managen wird demnach überprüft, ob ein bestimmtes Bild schon in der jeweiligen Größe vorhanden ist. Dazu wird eine Instanz der Klasse \textit{ScaledImages} erzeugt. Diese Instanz fungiert als gemeinsamer Speicherort aller skalierten Bilder. Die Klasse hat ein zweidimensionales Array des Types \textit{ImageWithName} und eine Methode \textit{exists()}. Die Methode \textit{exists()} sucht mithilfe von dem Pfad des Bildes und den gewünschten Dimensionen in dem Array nach bereits skalierten Bildern. In dem Fall, dass etwas gefunden wird, werden die Koordinaten des gefunden Bildes zurückgegeben. Der Skalier-Thread speichert dan eine Referenz auf das gefundene Bild ab.
+Beim Managen wird demnach überprüft, ob ein bestimmtes Bild schon in der jeweiligen Größe vorhanden ist. Dazu wird eine Instanz der Klasse \textit{ScaledImages} erzeugt. Diese Instanz fungiert als gemeinsamer Speicherort aller skalierten Bilder. Die Klasse hat ein zweidimensionales Array des Types \textit{ImageWithName} und eine Methode \textit{exists()}. Die Methode \textit{exists()} sucht mithilfe von dem Pfad des Bildes und den gewünschten Dimensionen in dem Array nach bereits skalierten Bildern. In dem Fall, dass etwas gefunden wird, werden die Koordinaten des gefunden Bildes zurückgegeben. Im Falle eines Treffers wird eine Referenz auf das Bild gespeichert, anstelle es zu skalieren.
 \medskip
 \newline
-Ein Problem beinhaltet das System jedoch noch. Es könnte zu der Situation kommen, dass mehrere Threads gleichzeitig mit dem gleichem Bildauftrag gestartet werden. Anfangs überprüft jeder Thread, ob sie arbeiten dürfen, oder das gewünschte Bild noch nicht existiert. Alle Threads werden davon ausgehen, dass die Arbeiten dürfen, da das Skalieren des Bildes und Speichern dessen vergleichsweise länger dauert als einen neuen Thread zu starten. Doch dadurch werden nicht nur Ressourcen unnütz verbraucht, sondern auch Fehler in der Bilddatei können entstehen, da mehrere Threads gleichzeitig eine Datei auslesen.
+Ein Problem beinhaltet das System jedoch noch. Es könnte zu der Situation kommen, dass mehrere Threads gleichzeitig mit dem gleichem Bildauftrag gestartet werden. Anfangs überprüft jeder Thread, ob sie arbeiten dürfen, oder das gewünschte Bild noch nicht existiert. Alle Threads werden davon ausgehen, dass sie arbeiten dürfen. Denn das Skalieren des Bildes und Speichern dessen länger dauert als einen neuen Thread zu starten. Doch dadurch werden nicht nur Ressourcen unnütz verbraucht, sondern auch Fehler in der Bilddatei können durch gleichzeitiges zugreifen auf eine Datei entstehen.
 
 \begin{figure}[h]
     \centering
@@ -80,12 +80,12 @@ Ein Problem beinhaltet das System jedoch noch. Es könnte zu der Situation komme
     \caption[Thread und Manager]{Threads mit Manager}
 \end{figure}
 
-Um ein solches Verhalten zu verhindern, versucht ein Thread ein Bild zu reservieren, wenn es laut Manager frei ist. Ein Reserviertes Bild, wird als bereits existierendes gewertet. Das Referenz System funktioniert weiterhin, da keine neuen Objekte erstellt werden, sondern diese nur mit dem Bild befüllt werden. Die Array Struktur wird durch rasantes steigen des Speicherverbrauchs einzelner Objekte nicht beeinflusst. Das liegt unter anderem an dem \textit{GarbageCollector} von Java, welcher auch in Stande is Arrays aus ihrem sonnst linearem Besetzen eines Speicherblockes im Arbeitsspeicher aufzuteilen, um unter anderem größer werdenden Objekten platz zu schaffen. Dabei werden interne Referenzen des Arrays überschrieben, um zu dem verschobenem Objekt zu zeigen.
+Um ein solches Verhalten zu verhindern, versucht ein Thread ein Bild zu reservieren, wenn es laut Manager frei ist. Ein reserviertes Bild wird als bereits existierendes gewertet. Das Referenz System funktioniert weiterhin, da nur auf den Index gezeigt wird und nicht auf dessen Inhalt. Die für gewöhnlich lineare Array Struktur wird durch rasantes steigen des Speicherverbrauchs einzelner Objekte nicht beeinflusst. Das liegt unter anderem an dem \textit{GarbageCollector} von Java, welcher auch im Stande ist Arrays aus ihrem sonst linearem Besetzen eines Speicherblockes im Arbeitsspeicher aufzuteilen. Es kann dadurch  größer werdenden Objekten Platz geschaffen werden. Interne Referenzen des Arrays werden überschrieben, um zu dem verschobenem Objekt zu zeigen.
 
 \newpage
 
 \paragraph{Berechnen der Zielgröße}\mbox{}\\
-Das Ziel ist, die Bilder so gut wie möglich zu verwerten. Dazu müssen unterschiedliche Kriterien erfüllt werden. Erstens sollte das Bild nicht verzogen werden, zweitens sollte immer der größtmögliche Bereich des Bildes verwendet werden.
+Das Ziel ist, die Bilder so gut wie möglich zu verwerten. Dazu müssen unterschiedliche Kriterien erfüllt werden. Erstens sollte das Bild nicht verzogen werden, zweitens sollte immer der größtmögliche Bereich eines Bildes verwendet werden.
 
 \begin{figure}[h]
     \centering
@@ -95,19 +95,19 @@ Das Ziel ist, die Bilder so gut wie möglich zu verwerten. Dazu müssen untersch
     \caption[Berechnen Zielgröße]{Berechnen Zielgröße}
 \end{figure}
 
-Um das zu erreichen wird das Bild erst auf die Größe des gewünschten Sektors skaliert. Anschließend werden die Ränder abgeschnitten. Beim Skalieren wird versucht eine x-Achse des Bildes der y-Achse des Sektors anzupassen. Damit kann sichergestellt werden, dass das Bild seine Verhältnis beibehält. Wie in der oberen Grafik zu erkennen ist, wird ein Vertikal ausgerichtetes Bild in einen Horizontalen Sektor eingesetzt. Dazu wurde die x-Achse des Bildes auf die des Sektors skaliert. Die Formel zum Berechnen der y-Achse ist wie folgt.
+Um das erreichen zu können, wird das Bild erst auf die Größe des gewünschten Sektors skaliert. Anschließend werden die Ränder abgeschnitten. Beim Skalieren wird versucht die x-Achse des Bildes der y-Achse des Sektors anzupassen. Damit kann sichergestellt werden, dass das Bild sein Verhältnis beibehält. Wie in der oberen Grafik zu erkennen ist, wird ein vertikal ausgerichtetes Bild in einen horizontalen Sektor eingesetzt. Dazu wurde die x-Achse des Bildes auf die des Sektors skaliert. Die Formel zum Berechnen der y-Achse ist wie folgt.
 \begin{align}
     y_\mathnormal{Bild\,neu}=y_\mathnormal{Bild\,alt} \cdot \frac{x_\mathnormal{sek.}}{x_\mathnormal{Bild\,alt}}
 \end{align}    
-Wenn die neu berechnete y-Achse kleiner ist als die des Sektors wird das selbe mit der x-Achse gemacht. Im letzten Schritt wird ein Abschnitt mittig aus dem skaliertem Bild mit den Abmaßen des Sektors geschnitten.
+Wenn die neu berechnete y-Achse kleiner ist als die des Sektors, wird das obige Vorgehen umgekehrt mit der x-Achse gemacht. Der letzte Schritt ist ein Abschnitt mittig aus dem skaliertem Bild mit den Abmaßen des Sektors zu schneiden.
 
 \newpage
 
 \paragraph{Skalieren des Bildes}\mbox{}\\
-Einleitend muss ich zu diesem Abschnitt sagen, dass ich die Folgenden Methoden nicht selber implementiert habe. Ich nutzte dazu die imgskalr library von Riyad Kalla, welche auf der Bilineare und Bikubischen Interpolation von Javas \textit{Graphics2D} beruht.\cite{Scalr:Kalla} Im folgenden werde ich die Bilineare Interpolation erklären. Auf die Bikubische werde ich nur kurz eingehen.
+Einleitend muss ich zu diesem Abschnitt sagen, dass ich die folgenden Methoden nicht selber implementiert habe. Ich nutzte dazu die imgskalr library von Riyad Kalla, welche auf der bilinearen und bikubischen Interpolation von Javas \textit{Graphics2D} beruht.\cite{Scalr:Kalla} Im folgenden werde ich die Bilineare Interpolation erklären. Auf die bikubischen Interpolation werde ich nur kurz eingehen.
 \medskip
 \newline
-Bei dem Hochskalieren von Bildern stößt man auf das Problem, dass Farbwerte erfunden werden müssen. Andere Algorithmen erfinden keine neuen Farben und sind gut für Pixel Bilder geeignet (nearest neighbour). Für Landschaftsbilder würde dies lediglich ein verpixeltes Bild in einer größeren Auflösung ergeben. Um neue Farbwerte zu Berechnen, werde diese bei der Bilinearen Interpolation linear zwischen den Pixeln berechnet.
+Bei dem Hochskalieren von Bildern stößt man auf das Problem, dass Farbwerte erfunden werden müssen. Andere Algorithmen erfinden keine neuen Farben und sind gut für Pixel Bilder geeignet (nearest neighbour). Für Landschaftsbilder würde dies lediglich ein verpixeltes Bild in einer größeren Auflösung ergeben. Um neue Farbwerte zu berechnen, werden diese bei der bilinearen Interpolation linear zwischen den Pixeln ermittelt.
 
 \begin{figure}[h]
     \centering
@@ -120,13 +120,16 @@ Bei dem Hochskalieren von Bildern stößt man auf das Problem, dass Farbwerte er
     \caption[Bilinear]{Bilineare Interpolation}
 \end{figure}
 
-Die unterschiedlichen Höhen in der der Grafik repräsentieren die Unterschiedlichen Farbwerte der Pixel. Das 3x3 Bild wird um den Faktor 3 skaliert. Zuerst wird ein Netz zwischen den einzelnen Werten gespannt. Die neuen Farbwerte entstehen an den Schnittpunkten des Netzes. Der Farbwert lässt sich somit mit den folgenden Gleichungen berechnen.\cite[Ab 4:44]{Bilinear:Pound}
+Die unterschiedlichen Höhen in der Grafik, repräsentieren die unterschiedlichen Farbwerte der Pixel. Das 3x3 Bild wird um den Faktor 3 skaliert. Zuerst wird ein Netz zwischen den einzelnen Werten gespannt. Die neuen Farbwerte entstehen an den Schnittpunkten des Netzes. Der Farbwert lässt sich somit mit den folgenden Gleichungen berechnen.\cite[Ab 4:44]{Bilinear:Pound}
 \begin{flalign}
     F_\mathnormal{neuX}=(F_\mathnormal{1\,0}-F_\mathnormal{0\,0})\cdot\frac{n_x}{S_\mathnormal{fak.}} \label{eq:WNeuX}\\
     F_\mathnormal{neuY}=(F_\mathnormal{1\,1}-F_\mathnormal{0\,1})\cdot\frac{n_y}{S_\mathnormal{fak.}} \label{eq:WNeuY}\\
     F_\mathnormal{neu}=F_\mathnormal{0\,0}+(F_\mathnormal{neuX})+(F_\mathnormal{neuY}-F_\mathnormal{neuX})\cdot\frac{n_y}{S_\mathnormal{fak.}} \label{eq:WNeu}
 \end{flalign}
-In den Gleichungen \ref{eq:WNeuX} und \ref{eq:WNeuY} werden die Start- und End-Punkte einer Netzlinie berechnet. $n_x$ und $n_y$ sind Zähler, welche die gewünschte Position in dem Teilnetz angibt. Das Maximum der beiden ist $S_\mathnormal{fak.}+1$. $S_\mathnormal{fak.}$ ist dabei der Faktor, um wie viel das Bild skaliert werden soll. Der Unterschied zischen Bilinearer Interpolation und Bikubischen ist, dass bei der Bilinearen lediglich zwei Linien aus jeweils zwei Punkte benutzt werden. Bei der Bikubischen werden vier kubische Spline Funktion aus jeweils vier Punkten benutzt. Der Vorteil der Bikubischen ist, dass das resultierende Bild einen höheren Kontrast bekommt. Auch können Komplexere Formen besser berücksichtigt werden.\cite[Seite 37]{Bicubic:Rowe}
+In den Gleichungen \ref{eq:WNeuX} und \ref{eq:WNeuY} werden die Start- und End-Punkte einer Netzlinie berechnet. $n_x$ und $n_y$ sind Zähler, welche die gewünschte Position in dem Teilnetz angeben. Das Maximum der beiden ist $S_\mathnormal{fak.}+1$. $S_\mathnormal{fak.}$ ist dabei der Faktor, um wie viel das Bild skaliert werden soll.
+\medskip
+\newline
+Der Unterschied zischen bilinearer und bikubischen Interpolation ist, dass bei der bilinearen Interpolation lediglich zwei Linien aus jeweils zwei Punkte benutzt werden. Bei der bikubischen Interpolation werden vier kubische Spline Funktionen aus jeweils vier Punkten benutzt. Der Vorteil der bikubischen Interpolation ist, dass das resultierende Bild einen höheren Kontrast bekommt. Auch können komplexere Formen besser berücksichtigt werden.\cite[Seite 37]{Bicubic:Rowe}
 
 \begin{figure}[h]
     \centering
@@ -141,7 +144,7 @@ In den Gleichungen \ref{eq:WNeuX} und \ref{eq:WNeuY} werden die Start- und End-P
 \footnotetext{Funktion mit \url{https://tools.timodenk.com/cubic-spline-interpolation} erstellt}
 
 \medskip
-Um die beste Qualität dei dem Runterskalieren zu erhalten, wird das Bild häufiger skaliert. Dies verwaltet die imgskalr library. Das Bild wird wiederholt um $\frac{1}{7}$ seiner Breite und Höhe verkleinert. Der Wert wurde nicht Mathematisch berechnet, sondern wurde durch testen herausgefunden.\cite{Scalr:Kalla}
+Um die beste Qualität bei dem runterskalieren zu erhalten, wird das Bild häufiger skaliert. Dies verwaltet die imgskalr library. Das Bild wird wiederholt um $\frac{1}{7}$ seiner Breite und Höhe verkleinert. Der Wert wurde nicht mathematisch berechnet, sondern wurde durch testen herausgefunden.\cite[Scalr.java Zeile 2221]{Scalr:Kalla}
 
 \begin{figure}[h]
     \centering
