@@ -1504,24 +1504,9 @@ INPUT .\image.out
 INPUT .\image.out
 OUTPUT image.out
 OUTPUT image.pdf
-INPUT C:\Users\Philipp Bleimund\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr8.tfm
-INPUT C:\Users\Philipp Bleimund\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr6.tfm
-INPUT C:\Users\Philipp Bleimund\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmmi12.tfm
-INPUT C:\Users\Philipp Bleimund\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmmi8.tfm
-INPUT C:\Users\Philipp Bleimund\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmmi6.tfm
-INPUT C:\Users\Philipp Bleimund\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmsy10.tfm
-INPUT C:\Users\Philipp Bleimund\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmsy8.tfm
-INPUT C:\Users\Philipp Bleimund\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmsy6.tfm
-INPUT C:\Users\Philipp Bleimund\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmex10.tfm
-INPUT C:\Users\Philipp Bleimund\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex8.tfm
-INPUT C:\Users\Philipp Bleimund\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
 INPUT C:\Users\Philipp Bleimund\AppData\Local\MiKTeX\fonts\map\pdftex\pdftex.map
 INPUT image.aux
 INPUT .\image.out
 INPUT .\image.out
-INPUT C:\Users\Philipp Bleimund\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi12.pfb
-INPUT C:\Users\Philipp Bleimund\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi12.pfb
 INPUT C:\Users\Philipp Bleimund\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr12.pfb
 INPUT C:\Users\Philipp Bleimund\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr12.pfb
-INPUT C:\Users\Philipp Bleimund\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr8.pfb
-INPUT C:\Users\Philipp Bleimund\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr8.pfb

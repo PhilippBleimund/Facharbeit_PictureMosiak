@@ -62,36 +62,52 @@
 
 \begin{document}
 
-    \begin{tabular}{| l | l |}
-        \hline
-        Prozess & Ausführungszeit\\
-        \hline
-        A & 8ms\\
-        \hline
-        B & 4ms\\
-        \hline
-        C & 16ms\\
-        \hline
-        D & 4ms\\
-        \hline
-    \end{tabular}
-    \begin{tabular}{| x{1em} | x{1em} | x{1em} | x{1em} | x{1em} | x{1em} | x{1em} | x{1em} | x{1em} |}
-        \hline
-        \rowcolor{black!10}
-        & $Q_1$ & $Q_2$ & $Q_3$ & $Q_4$ & $Q_5$ & $Q_6$ & $Q_7$ & $Q_8$\\
-        \hline
-        \rowcolor{black!20}
-        A & 1 & 2 & 3 & 4 & 6 & 8 & &\\
-        \hline
-        \rowcolor{black!10}
-        B & 1 & 2 & 3 & 4 & & & &\\
-        \hline
-        \rowcolor{black!20}
-        C & 1 & 2 & 3 & 4 & 6 & 8 & 12 & 16\\
-        \hline
-        \rowcolor{black!10}
-        D & 1 & 2 & 3 & 4 & & & &\\
-        \hline
-    \end{tabular}
+\begin{tikzpicture}[scale=0.5]
+  \draw[rounded corners, fill=black!10] (0, 0) rectangle (10, 10){};
+  \draw[rounded corners, fill=black!5] (9,9) rectangle (1, 3);
+
+  \foreach \s in {0, 0.3, ..., 1.5}{
+      \draw[fill=blue!30] (1, 0.5+\s) rectangle (2, 0.5+\s+0.3);
+  }
+
+  \foreach \s in {0, 0.3, ..., 1.5}{
+      \draw[fill=blue!30] (2, 4+\s) rectangle (3, 4+\s+0.3);
+  }
+  \foreach \s in {0, 0.3, ..., 1.5}{
+      \draw[fill=blue!30] (4, 4+\s) rectangle (5, 4+\s+0.3);
+  }
+  \foreach \s in {0, 0.3, ..., 1.5}{
+      \draw[fill=blue!30] (6, 4+\s) rectangle (7, 4+\s+0.3);
+  }
+  
+  \foreach \t in {0, 0.5, ..., 1.5}{
+      \draw[thick] (2, 6+\t) -- (3, 6+\t+0.25);
+      \draw[thick] (3, 6+\t+0.25) -- (2, 6.5+\t);
+  }
+  \draw[thick] (2, 6+2) -- (3, 8.25);
+
+  \foreach \t in {0, 0.5, ..., 1.5}{
+      \draw[thick] (4, 6+\t) -- (5, 6+\t+0.25);
+      \draw[thick] (5, 6+\t+0.25) -- (4, 6.5+\t);
+  }
+  \draw[thick] (4, 6+2) -- (5, 8.25);
+  
+  \foreach \t in {0, 0.5, ..., 1.5}{
+      \draw[thick] (6, 6+\t) -- (7, 6+\t+0.25);
+      \draw[thick] (7, 6+\t+0.25) -- (6, 6.5+\t);
+  }
+  \draw[thick] (6, 6+2) -- (7, 8.25);
+
+  \draw[thick, ->] (5, 11) -- (6.5, 8.25);
+  \node[] at (5, 11.5){Thread};
+
+  \draw[thick, ->] (-1, 1.5) -- (1, 1.2);
+  \node[] at (-1, 2){Stack};
+
+  \node[] at (6, 1.5){Prozess Bereich};
+
+  \draw[thick, ->] (11, 6) -- (7, 5);
+  \node[] at (11, 6.5){Stack};
+\end{tikzpicture}
 
 \end{document}
