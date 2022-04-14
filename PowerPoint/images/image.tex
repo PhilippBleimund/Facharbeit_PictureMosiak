@@ -1,0 +1,97 @@
+\documentclass[12pt]{standalone}
+%\documentclass[crop,tikz,convert={outext=.svg,command=\unexpanded{pdf2svg \infile\space\outfile}},multi=false]{standalone}[29.03.2022]
+\usepackage[left=2.5cm, right=4.5cm, top=2.5cm, bottom=2cm]{geometry}
+\usepackage[onehalfspacing]{setspace}
+\usepackage[utf8]{inputenc}
+\usepackage{ngerman}
+\usepackage{bibgerm}
+\setlength\parindent{0pt}
+
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{wrapfig}
+\usepackage{caption}
+
+\usepackage{sidecap}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{arrows.meta}
+\usepackage{environ}
+\usepackage{tikz-3dplot}
+\usepackage{import}
+\usepackage{calc}
+\usepackage{pgfmath}
+\usepackage{ifthen}
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween}
+\usepackage{amsmath}
+\usepackage{makecell}
+\usepackage{xr}
+\usepackage{xurl}
+\usepackage{footnote}
+\usepackage[perpage, hang]{footmisc}
+\usepackage{tablefootnote}
+\usepackage{tabularx}
+\usepackage{textcomp}
+\usepackage[section]{placeins}
+\usepackage{hyperref}
+\setlength\footnotemargin{10pt}
+\usepackage{listings}
+\usepackage{chngcntr}
+\usepackage{lipsum}
+\usepackage{color, colortbl}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage[export]{adjustbox}
+\newfloat{Ausschnitt}{htbp}{loa}
+\newcommand{\captionref} [1]{\textit{\nameref{#1}}}
+\newcolumntype{x}[1]{>{\centering\arraybackslash}p{#1}}
+\usepackage{standalone}
+
+\tikzset{%
+  block/.style    = {draw, thick, rectangle, minimum height = 3em,
+    minimum width = 3em},
+  sum/.style      = {draw, circle, node distance = 1.5cm}, % Adder
+  input/.style    = {coordinate}, % Input
+  output/.style   = {coordinate}, % Output
+   base/.style = {rectangle, rounded corners, draw=black, minimum width=2cm, minimum height=1cm, text centered}
+}
+
+\thispagestyle{empty}
+
+\begin{document}
+
+    \begin{tabular}{| l | l |}
+        \hline
+        Prozess & Ausführungszeit\\
+        \hline
+        A & 8ms\\
+        \hline
+        B & 4ms\\
+        \hline
+        C & 16ms\\
+        \hline
+        D & 4ms\\
+        \hline
+    \end{tabular}
+    \begin{tabular}{| x{1em} | x{1em} | x{1em} | x{1em} | x{1em} | x{1em} | x{1em} | x{1em} | x{1em} |}
+        \hline
+        \rowcolor{black!10}
+        & $Q_1$ & $Q_2$ & $Q_3$ & $Q_4$ & $Q_5$ & $Q_6$ & $Q_7$ & $Q_8$\\
+        \hline
+        \rowcolor{black!20}
+        A & 1 & 2 & 3 & 4 & 6 & 8 & &\\
+        \hline
+        \rowcolor{black!10}
+        B & 1 & 2 & 3 & 4 & & & &\\
+        \hline
+        \rowcolor{black!20}
+        C & 1 & 2 & 3 & 4 & 6 & 8 & 12 & 16\\
+        \hline
+        \rowcolor{black!10}
+        D & 1 & 2 & 3 & 4 & & & &\\
+        \hline
+    \end{tabular}
+
+\end{document}
