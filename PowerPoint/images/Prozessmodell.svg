@@ -38,13 +38,14 @@
      inkscape:window-height="1377"
      id="namedview252"
      showgrid="false"
-     inkscape:zoom="2.2396337"
-     inkscape:cx="246.46887"
-     inkscape:cy="161.04524"
+     inkscape:zoom="3.1673204"
+     inkscape:cx="346.46229"
+     inkscape:cy="165.9159"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg250" />
+     inkscape:current-layer="page1"
+     inkscape:document-rotation="0" />
   <defs
      id="defs49">
     <font
@@ -337,7 +338,7 @@
        id="path83" />
     <g
        aria-label="timeout"
-       transform="matrix(1 0 0 1 250.8092 -110.1062)"
+       transform="translate(250.8092,-140.1062)"
        id="text85"
        style="font-size:10.9091px;font-family:'CMU Serif'"
        class="f0">
@@ -773,7 +774,7 @@
        id="path159" />
     <g
        aria-label="dispatch"
-       transform="matrix(1 0 0 1 249.4152 -139.8505)"
+       transform="translate(249.4152,-109.8505)"
        id="text163"
        style="font-size:10.9091px;font-family:'CMU Serif'"
        class="f0">
